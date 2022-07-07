@@ -13,6 +13,7 @@ import ChartGlucose from './ChartGlucose.vue'
 import ChartInsulinCarbs from './ChartInsulinCarbs.vue'
 import ChartControllerOutput from './ChartControllerOutput.vue'
 import ChartAGP from './ChartAGP.vue'
+import Event from './Event.vue'
 
 let controller = {}
 
@@ -51,6 +52,7 @@ export default {
 		ChartInsulinCarbs,
 		ChartControllerOutput,
 		ChartAGP,
+		Event
 	},
 
 	data() {
@@ -162,6 +164,9 @@ export default {
 	<div id="container">
 		<div id="controls" class="box">
 			<h2>{{$t("settings")}}</h2>
+			<Event title="M"> </Event>
+			<Event title="B"> </Event>
+			<Event title="A"> </Event>
 			<ControllerConfig 
 				@controllerChanged="controllerChanged" 
 				v-bind:patient="patientData">
