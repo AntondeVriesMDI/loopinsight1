@@ -59,6 +59,8 @@ export default {
       this.meal.actual.start = new Date(this.tActualStartString);
       this.meal.announcement.start = new Date(this.tAnnouncedStartString);
       this.meal.announcement.time = new Date(this.tAnnouncementTimeString);
+      console.log("exppert meal");
+      console.log(this.meal);
       this.$emit("mealChanged", this.meal);
     },
 

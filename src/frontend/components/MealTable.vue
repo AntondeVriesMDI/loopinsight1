@@ -76,7 +76,6 @@ export default {
 
   mounted() {
     this.addRow();
-    console.log(this.meals);
   },
 
   computed: {

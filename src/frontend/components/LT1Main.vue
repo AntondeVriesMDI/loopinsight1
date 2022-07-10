@@ -114,12 +114,14 @@ export default {
       this.patientData = Object.assign({}, newPatient);
     },
     mealsChanged(newMeals) {
+      console.log("meals:");
       console.log(newMeals);
       this.meals = newMeals;
     },
     eventsChanged(changedEvents) {
+      console.log("events");
+      console.log(changedEvents);
       this.meals = changedEvents;
-      console.log(this.meals);
       this.run();
     },
     resetCharts() {

@@ -226,6 +226,9 @@ export default {
     this.getOffset();
   },
   methods: {
+    update() {
+      console.log("update");
+    },
     reset() {
       this.data = [];
       this.xTicks = [];
@@ -243,12 +246,9 @@ export default {
         for (let i = 0; i <= this.events.length - 1; i++) {
           if (this.events[i].id == changedEvent.id) {
             this.events[i].actual.carbs = this.scaleFinvert(changedEvent.y);
-            this.events[i].actual.start = this.scaleTinvert(changedEvent.x)
-              .toISOString()
-              .toString();
+            this.events[i].actual.start = this.scaleTinvert(changedEvent.x);
           }
         }
-        this.$emit("eventsChanged", this.events);
       } else if (changedEvent.type == "A") {
         for (let i = 0; i <= this.events.length - 1; i++) {
           if (this.events[i].id == changedEvent.id) {
@@ -257,13 +257,11 @@ export default {
             );
             this.events[i].announcement.start = this.scaleTinvert(
               changedEvent.x
-            )
-              .toISOString()
-              .toString();
+            );
           }
         }
-        this.$emit("eventsChanged", this.events);
       }
+      this.$emit("eventsChanged", JSON.parse(JSON.stringify(this.events)));
     },
     getOffset() {
       let top = this.scaleY(this.borders[1]);
