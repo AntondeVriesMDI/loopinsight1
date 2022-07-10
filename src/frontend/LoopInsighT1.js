@@ -9,6 +9,8 @@ import Simulator from "../core/Simulator.js";
 import { createI18n } from "vue-i18n";
 import VTooltip from "v-tooltip";
 import "v-tooltip/dist/v-tooltip.css";
+//import store from "./store";
+import { createStore, createLogger } from "vuex";
 
 // prepare Vue app
 const LT1VueApp = {
@@ -25,6 +27,20 @@ const LT1VueApp = {
   },
 };
 
+const store = createStore({
+  state() {
+    return {
+      data: [],
+      meals: [],
+    };
+  },
+  mutations: {
+    setData(data) {
+      this.data = data;
+    },
+  },
+});
+
 // create
 const app = Vue.createApp(LT1VueApp);
 
@@ -39,6 +55,8 @@ app.use(i18n);
 
 // add tooltip support
 app.use(VTooltip);
+
+app.use(store);
 
 // mount
 const gui = app.mount("#app");

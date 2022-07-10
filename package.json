@@ -15,7 +15,8 @@
     "chartjs-adapter-moment": "^1.0.0",
     "d3": "^7.6.1",
     "moment": "^2.29.3",
-    "oref0": "^0.7.0"
+    "oref0": "^0.7.0",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^4.0.1",
