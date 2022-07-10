@@ -4,194 +4,214 @@
    	Distributed under the MIT software license.
 	See https://lt1.org for further information.	*/
 
-import {dateToBrowserLocale} from "../../common/util.js"
+import { dateToBrowserLocale } from "../../common/util.js";
 
 export default {
-	emits: ["mealChanged", "mealDelete"],
-	
-	data() {
-		return {
-			tActualStartString: "",
-			tAnnouncedStartString: "",
-			tAnnouncementTimeString: "",
-		}
-	},
-	
-	props: {
-		id: Number,		// list number of this meal
-		meal: Object,	// meal description
-		t0: Date,		// simulation start date
-	},
+  emits: ["mealChanged", "mealDelete"],
 
-	computed: {
-		t0String() {
-			return {};//dateToBrowserLocale(this.t0)
-		},
-	},
+  data() {
+    return {
+      tActualStartString: "",
+      tAnnouncedStartString: "",
+      tAnnouncementTimeString: "",
+    };
+  },
 
-	watch: {
-		"meal.actual.start": {
-			handler: function(val) { 
-				this.tStartString = dateToBrowserLocale(this.meal.actual.start)
-			},
-			immediate: true,
-		},
-		"meal.announcement.start": {
-			handler: function(val) { 
-				this.tAnnouncedStartString = dateToBrowserLocale(this.meal.announcement.start)
-			},
-			immediate: true,
-		},
-		"meal.announcement.time": {
-			handler: function(val) { 
-				this.tAnnouncementTimeString = dateToBrowserLocale(this.meal.announcement.time)
-			},
-			immediate: true,
-		},
-	},
+  props: {
+    id: Number, // list number of this meal
+    meal: Object, // meal description
+    t0: Date, // simulation start date
+  },
 
-	methods: {
-		changed() {
-			this.meal.actual.start = new Date(this.tActualStartString)
-			this.meal.announcement.start = new Date(this.tAnnouncedStartString)
-			this.meal.announcement.time = new Date(this.tAnnouncementTimeString)
-			this.$emit("mealChanged", this.meal);
-		},
-		
-		mealDelete() {
-			this.$emit("mealDelete", this.meal);
-		},
-	},
-	
-	beforeMount() {
-		if (typeof this.meal.announcement == "undefined") {
-			this.meal.announcement = {
-					start: this.meal.actual.start, 	// time
-					carbs: 0, 						// in g
-					time: 0,						// time: from the start
-				};
-		}
-	},
+  computed: {
+    t0String() {
+      return {}; //dateToBrowserLocale(this.t0)
+    },
+  },
 
-}
+  watch: {
+    "meal.actual.start": {
+      handler: function (val) {
+        this.tStartString = dateToBrowserLocale(this.meal.actual.start);
+      },
+      immediate: true,
+    },
+    "meal.announcement.start": {
+      handler: function (val) {
+        this.tAnnouncedStartString = dateToBrowserLocale(
+          this.meal.announcement.start
+        );
+      },
+      immediate: true,
+    },
+    "meal.announcement.time": {
+      handler: function (val) {
+        this.tAnnouncementTimeString = dateToBrowserLocale(
+          this.meal.announcement.time
+        );
+      },
+      immediate: true,
+    },
+  },
+
+  methods: {
+    changed() {
+      this.meal.actual.start = new Date(this.tActualStartString);
+      this.meal.announcement.start = new Date(this.tAnnouncedStartString);
+      this.meal.announcement.time = new Date(this.tAnnouncementTimeString);
+      this.$emit("mealChanged", this.meal);
+    },
+
+    mealDelete() {
+      this.$emit("mealDelete", this.meal);
+    },
+  },
+
+  beforeMount() {
+    if (typeof this.meal.announcement == "undefined") {
+      this.meal.announcement = {
+        start: this.meal.actual.start, // time
+        carbs: 0, // in g
+        time: 0, // time: from the start
+      };
+    }
+  },
+};
 </script>
 
-
 <template>
-	<h4>{{$t('meal')}} #{{id}} ({{meal.id}})
-		<input type="button" style="margin-left:1em;"
-			:value="$t('delete')" 
-			@click="mealDelete">
-	</h4>
-	
-	<ul style="padding-left:0;">
-		<li>{{$t("announcedmeal")}}:</li>
-		<ul>
-			<li v-tooltip="$t('announcement.start_TT')">
-				<label for="actual_start" class="meallabel">
-					<div class="meallabel">{{$t("announcement.start")}}:</div>
-					<div class="mealtime">
-						<input type="datetime-local" id="announced_start"
-							:min="t0String"
-							v-model="tAnnouncedStartString"
-							@change="changed">
-					</div>
-				</label>
-			</li>
-			<li v-tooltip="$t('announcement.carbs_TT')">
-				<label for="announced_carbs" class="meallabel">
-					<div class="meallabel">{{$t("announcement.carbs")}}:</div>
-					<div class="mealvalue">
-						<input type="Number" id="announced_carbs" 
-							min="0"
-							v-model.number="meal.announcement.carbs"
-							@change="changed">
-					</div>
-				</label>
-			</li>
-			<li v-tooltip="$t('announcement.time_TT')">
-				<label for="announcement_time" class="meallabel">
-					<div class="meallabel">{{$t("announcement.time")}}:</div>
-					<div class="mealtime">
-						<input type="datetime-local" id="announcement_time"
-							:min="t0String"
-							v-model="tAnnouncementTimeString"
-							 @change="changed">
-					</div>
-				</label>
-			</li>
-		</ul>
-		<li>{{$t("actualmeal")}}:</li>
-		<ul>
-			<li v-tooltip="$t('actual.start_TT')">
-				<label for="actual_start" class="meallabel">
-					<div class="meallabel">{{$t("actual.start")}}:</div>
-					<div class="mealtime">
-						<input type="datetime-local" 
-							id="actual_start" 
-							:min="t0String"
-							v-model="tStartString"
-							@change="changed">
-					</div>
-				</label>
-			</li>
-			<li v-tooltip="$t('actual.carbs_TT')">
-				<label for="actual_carbs" class="meallabel">
-					<div class="meallabel">{{$t("actual.carbs")}}:</div>
-					<div class="mealvalue">
-						<input type="Number" id="actual_carbs"
-							min="0" 
-							v-model.number="meal.actual.carbs"
-							@change="changed">
-					</div>
-				</label>
-			</li>
-			<li v-tooltip="$t('actual.duration_TT')">
-				<label for="actual_duration" class="meallabel">
-					<div class="meallabel">{{$t("actual.duration")}}:</div>
-					<div class="mealvalue">
-						<input type="Number" id="actual_duration"
-							min="1" 
-							v-model.number="meal.actual.duration" 
-							@change="changed">
-					</div>
-				</label>
-			</li>
-		</ul>
-	</ul>
+  <h4>
+    {{ $t("meal") }} #{{ id }} ({{ meal.id }})
+    <input
+      type="button"
+      style="margin-left: 1em"
+      :value="$t('delete')"
+      @click="mealDelete"
+    />
+  </h4>
+
+  <ul style="padding-left: 0">
+    <li>{{ $t("announcedmeal") }}:</li>
+    <ul>
+      <li v-tooltip="$t('announcement.start_TT')">
+        <label for="actual_start" class="meallabel">
+          <div class="meallabel">{{ $t("announcement.start") }}:</div>
+          <div class="mealtime">
+            <input
+              type="datetime-local"
+              id="announced_start"
+              :min="t0String"
+              v-model="tAnnouncedStartString"
+              @change="changed"
+            />
+          </div>
+        </label>
+      </li>
+      <li v-tooltip="$t('announcement.carbs_TT')">
+        <label for="announced_carbs" class="meallabel">
+          <div class="meallabel">{{ $t("announcement.carbs") }}:</div>
+          <div class="mealvalue">
+            <input
+              type="Number"
+              id="announced_carbs"
+              min="0"
+              v-model.number="meal.announcement.carbs"
+              @change="changed"
+            />
+          </div>
+        </label>
+      </li>
+      <li v-tooltip="$t('announcement.time_TT')">
+        <label for="announcement_time" class="meallabel">
+          <div class="meallabel">{{ $t("announcement.time") }}:</div>
+          <div class="mealtime">
+            <input
+              type="datetime-local"
+              id="announcement_time"
+              :min="t0String"
+              v-model="tAnnouncementTimeString"
+              @change="changed"
+            />
+          </div>
+        </label>
+      </li>
+    </ul>
+    <li>{{ $t("actualmeal") }}:</li>
+    <ul>
+      <li v-tooltip="$t('actual.start_TT')">
+        <label for="actual_start" class="meallabel">
+          <div class="meallabel">{{ $t("actual.start") }}:</div>
+          <div class="mealtime">
+            <input
+              type="datetime-local"
+              id="actual_start"
+              :min="t0String"
+              v-model="tStartString"
+              @change="changed"
+            />
+          </div>
+        </label>
+      </li>
+      <li v-tooltip="$t('actual.carbs_TT')">
+        <label for="actual_carbs" class="meallabel">
+          <div class="meallabel">{{ $t("actual.carbs") }}:</div>
+          <div class="mealvalue">
+            <input
+              type="Number"
+              id="actual_carbs"
+              min="0"
+              v-model.number="meal.actual.carbs"
+              @change="changed"
+              ref="mealCarbs"
+            />
+          </div>
+        </label>
+      </li>
+      <li v-tooltip="$t('actual.duration_TT')">
+        <label for="actual_duration" class="meallabel">
+          <div class="meallabel">{{ $t("actual.duration") }}:</div>
+          <div class="mealvalue">
+            <input
+              type="Number"
+              id="actual_duration"
+              min="1"
+              v-model.number="meal.actual.duration"
+              @change="changed"
+            />
+          </div>
+        </label>
+      </li>
+    </ul>
+  </ul>
 </template>
 
-
 <style lang="css" scoped>
-	h4 {
-		margin-bottom: 0.5em;
-	}
-
-	ul {
-		list-style:none;
-		padding-left:1em;
-		line-height:1.75em;
-	}
-		
-	.meallabel div {
-		display: inline-block;
-		width: 150px;
-	}
-	.mealvalue {
-		display: inline-block;
-	}
-	.mealvalue > input {
-		width: 4rem;
-		line-height: 1;
-	}
-	.mealtime > input {
-		width: 10rem;
-		font-size: 0.8rem;
-	}
-</style>
-
+h4 {
+  margin-bottom: 0.5em;
 }
 
+ul {
+  list-style: none;
+  padding-left: 1em;
+  line-height: 1.75em;
+}
+
+.meallabel div {
+  display: inline-block;
+  width: 150px;
+}
+.mealvalue {
+  display: inline-block;
+}
+.mealvalue > input {
+  width: 4rem;
+  line-height: 1;
+}
+.mealtime > input {
+  width: 10rem;
+  font-size: 0.8rem;
+}
+</style>
 
 <i18n locale="en">
 {
