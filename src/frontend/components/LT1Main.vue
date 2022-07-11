@@ -18,7 +18,8 @@ import GlucoseChart from "./GlucoseChart.vue";
 import { computed } from "vue";
 import GlucoseStats from "./GlucoseStats.vue";
 import Meals from "./Meals.vue";
-import '../assets/base.css'
+import Legend from "./Legend.vue";
+import "../assets/base.css";
 
 let controller = {};
 
@@ -61,6 +62,7 @@ export default {
     GlucoseChart,
     GlucoseStats,
     Meals,
+    Legend,
   },
 
   data() {
@@ -603,15 +605,15 @@ export default {
     );
   },
   methods: {
-    increment() {	
-			this.tspan++;
-			console.log(this.tspan);
-		},
-		decrement() {
-			if (this.tspan > 0) {
-				this.tspan--;
-			}
-		},
+    increment() {
+      this.tspan++;
+      console.log(this.tspan);
+    },
+    decrement() {
+      if (this.tspan > 0) {
+        this.tspan--;
+      }
+    },
     loadSzenario() {
       this.currentSzenario.patient = this.getPatient();
       this.$store.commit("setSzenario", this.currentSzenario);
@@ -698,21 +700,48 @@ export default {
 <template>
   <div>
     <nav class="navbar navbar-expand-md flex">
-    <div id="generaloptions" class="container-fluid parameterlist d-flex">
-		<div class="d-flex flex-row align-items-center">
-			<form class="d-flex align-items-center pe-3">
-			<label class="text lead fs-6 px-2 ">{{$t("t0")}}</label>
-			<input class="form-control form-control-sm" v-model="t0String" type="datetime-local">
-		</form>
-			<p class="text lead fs-6 m-auto">{{$t("tspan")}}:</p>
-			<p class="text lead fs-5 m-auto px-2 "><b>{{tspan}}</b></p>
-			<button id="plus" type="button" class="btn btn-primary rounded-circle text-center" @click="increment">+</button>
-			<button id="plus" type="button" class="btn btn-primary rounded-circle text-center" @click="decrement">-</button>
-		</div>
-					
-    <button type="button" class="btn btn-primary" id="startbutton" @click="run">{{$t("run")}}</button>
-	</div>
-</nav>
+      <div id="generaloptions" class="container-fluid parameterlist d-flex">
+        <div class="d-flex flex-row align-items-center">
+          <form class="d-flex align-items-center pe-3">
+            <label class="text lead fs-6 px-2">{{ $t("t0") }}</label>
+            <input
+              class="form-control form-control-sm"
+              v-model="t0String"
+              type="datetime-local"
+            />
+          </form>
+          <p class="text lead fs-6 m-auto">{{ $t("tspan") }}:</p>
+          <p class="text lead fs-5 m-auto px-2">
+            <b>{{ tspan }}</b>
+          </p>
+          <button
+            id="plus"
+            type="button"
+            class="btn btn-primary rounded-circle text-center"
+            @click="increment"
+          >
+            +
+          </button>
+          <button
+            id="plus"
+            type="button"
+            class="btn btn-primary rounded-circle text-center"
+            @click="decrement"
+          >
+            -
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="startbutton"
+          @click="run"
+        >
+          {{ $t("run") }}
+        </button>
+      </div>
+    </nav>
     <select v-model="currentSzenario">
       <option :value="szenario" :key="szenario" v-for="szenario in szenarios">
         {{ szenario.name }}
@@ -724,6 +753,7 @@ export default {
     <div id="container">
       <div id="controls">
         <GlucoseStats ref="chartAGP" />
+        <Legend />
       </div>
       <div id="results">
         <GlucoseChart
@@ -817,9 +847,9 @@ body {
   overflow-y: scroll;
   min-width: 440px;
 }
-input[type=datetime-local]:focus {
-	border-color: var(--orange-light);
-	box-shadow: 0 0 0 0.25rem var(--orange-light);
+input[type="datetime-local"]:focus {
+  border-color: var(--orange-light);
+  box-shadow: 0 0 0 0.25rem var(--orange-light);
 }
 /* for wide screen, show results next to settings. otherwise below */
 div#container {
@@ -988,22 +1018,22 @@ input#startbutton {
 	padding: 0.5em;
 }*/
 
-.navbar{
-    background: var(--blue-light);
-    border-top: 2px solid var(--blue-dark);
+.navbar {
+  background: var(--blue-light);
+  border-top: 2px solid var(--blue-dark);
 }
 #startbutton {
-	padding-left: 1.5rem;
-	padding-right: 1.5rem;
-   	background-color: var(--blue-dark);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  background-color: var(--blue-dark);
 }
 .text {
-	color: white;
+  color: white;
 }
 #plus {
-	background-color: var(--orange-light);
-	border: 0;
-	margin: auto;
+  background-color: var(--orange-light);
+  border: 0;
+  margin: auto;
 }
 /* tooltip popups */
 .v-popper__inner {
