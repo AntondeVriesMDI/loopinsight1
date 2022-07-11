@@ -18,6 +18,7 @@ import GlucoseChart from "./GlucoseChart.vue";
 import { computed } from "vue";
 import GlucoseStats from "./GlucoseStats.vue";
 import Meals from "./Meals.vue";
+import Scenario from "./Scenario.vue";
 import '../assets/base.css'
 
 let controller = {};
@@ -61,6 +62,7 @@ export default {
     GlucoseChart,
     GlucoseStats,
     Meals,
+    Scenario
   },
 
   data() {
@@ -713,14 +715,25 @@ export default {
     <button type="button" class="btn btn-primary" id="startbutton" @click="run">{{$t("run")}}</button>
 	</div>
 </nav>
-    <select v-model="currentSzenario">
+
+  <div class = "container-fluid">
+    <select class="form-select" v-model="currentSzenario">
       <option :value="szenario" :key="szenario" v-for="szenario in szenarios">
         {{ szenario.name }}
       </option>
     </select>
-    <button type="button" @click="loadSzenario">Load Szenario</button>
+    <button type="button" class="btn btn-primary" id="loadbutton" @click="loadSzenario">Load Scenario</button>
     {{ currentSzenario.name }}
-    <Meals />
+  </div>
+
+
+  <Scenario class="card">
+    <p class="card-body">
+      Szenario: {{ scenario="keins" }}
+    </p>
+  </Scenario>
+
+  <Meals />
     <div id="container">
       <div id="controls">
         <GlucoseStats ref="chartAGP" />
@@ -733,6 +746,7 @@ export default {
         />
       </div>
     </div>
+
     <div id="container">
       <div class="box">
         <h2>{{ $t("settings") }}</h2>
@@ -1009,6 +1023,19 @@ input#startbutton {
 .v-popper__inner {
   font-family: ABeeZee, Candara, Helvetica, sans-serif;
 }
+
+#loadbutton {	
+  padding-left: 1.5rem;
+	padding-right: 1.5rem;
+  background-color: var(--blue-dark);
+}
+
+.form-select {
+  width: 50%;
+  padding-left: 1.5rem;
+
+}
+
 </style>
 
 }
