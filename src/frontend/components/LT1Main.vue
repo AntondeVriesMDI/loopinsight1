@@ -17,6 +17,7 @@ import Event from "./Event.vue";
 import GlucoseChart from "./GlucoseChart.vue";
 import { computed } from "vue";
 import GlucoseStats from "./GlucoseStats.vue";
+import Meals from "./Meals.vue";
 
 let controller = {};
 
@@ -58,6 +59,7 @@ export default {
     Event,
     GlucoseChart,
     GlucoseStats,
+    Meals,
   },
 
   data() {
@@ -73,7 +75,8 @@ export default {
         meals: this.meals,
       },
       szenarios: {
-        a: {
+        Unterschätzung: {
+          name: "Unterschätzung",
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -222,54 +225,404 @@ export default {
               Isc2: 50.75030761670995,
             },
           },
-          meals: {
-            1: {
+          meals: [
+            {
               id: 2,
               actual: {
-                start: "2022-07-10T06:00:00.000Z",
+                start:
+                  new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
                 duration: 15,
-                carbs: 30,
+                carbs: 100,
               },
               announcement: {
-                start: "2022-07-10T06:00:00.000Z",
-                carbs: 30,
-                time: "2022-07-10T04:00:00.000Z",
+                start:
+                  new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
+                carbs: 50,
+                time:
+                  new Date(Date.now()).toISOString().substr(0, 11) + "06:00:00",
               },
             },
+          ],
+        },
+        Überschätzung: {
+          name: "Überschätzung",
+          patient: {
+            IIReq: 0.7687743244645887,
+            inputList: ["meal", "iir", "ibolus"],
+            outputList: ["G"],
+            parameterList: [
+              "BW",
+              "Gpeq",
+              "VG",
+              "k1",
+              "k2",
+              "VI",
+              "m1",
+              "m2",
+              "m4",
+              "m5",
+              "m6",
+              "HEeq",
+              "kmax",
+              "kmin",
+              "kabs",
+              "kgri",
+              "f",
+              "kp1",
+              "kp2",
+              "kp3",
+              "kp4",
+              "ki",
+              "Fcns",
+              "Vm0",
+              "Vmx",
+              "Km0",
+              "p2u",
+              "ke1",
+              "ke2",
+              "ka1",
+              "ka2",
+              "kd",
+            ],
+            stateList: [
+              "Gp",
+              "Gt",
+              "Ip",
+              "Il",
+              "Qsto1",
+              "Qsto2",
+              "Qgut",
+              "XL",
+              "I_",
+              "X",
+              "Isc1",
+              "Isc2",
+            ],
+            signalList: [
+              "RaI",
+              "E",
+              "EGP",
+              "Uid",
+              "Uii",
+              "I",
+              "Qsto",
+              "Ra",
+              "S",
+              "HE",
+              "m3",
+            ],
+            defaultParameters: {
+              BW: 75,
+              Gpeq: 180,
+              VG: 1.88,
+              k1: 0.065,
+              k2: 0.079,
+              VI: 0.05,
+              m1: 0.19,
+              m2: 0.484,
+              m4: 0.194,
+              m5: 0.0304,
+              m6: 0.6471,
+              HEeq: 0.6,
+              kmax: 0.0558,
+              kmin: 0.008,
+              kabs: 0.057,
+              kgri: 0.0558,
+              f: 0.9,
+              kp1: 2.7,
+              kp2: 0.0021,
+              kp3: 0.009,
+              kp4: 0.0618,
+              ki: 0.0079,
+              Fcns: 1,
+              Vm0: 2.5,
+              Vmx: 0.047,
+              Km0: 225.59,
+              p2u: 0.0331,
+              ke1: 0.0005,
+              ke2: 339,
+              ka1: 0.0018,
+              ka2: 0.0182,
+              kd: 0.0164,
+            },
+            parameters: {
+              BW: 75,
+              Gpeq: 180,
+              VG: 1.88,
+              k1: 0.065,
+              k2: 0.079,
+              VI: 0.05,
+              m1: 0.19,
+              m2: 0.484,
+              m4: 0.194,
+              m5: 0.0304,
+              m6: 0.6471,
+              HEeq: 0.6,
+              kmax: 0.0558,
+              kmin: 0.008,
+              kabs: 0.057,
+              kgri: 0.0558,
+              f: 0.9,
+              kp1: 2.7,
+              kp2: 0.0021,
+              kp3: 0.009,
+              kp4: 0.0618,
+              ki: 0.0079,
+              Fcns: 1,
+              Vm0: 2.5,
+              Vmx: 0.047,
+              Km0: 225.59,
+              p2u: 0.0331,
+              ke1: 0.0005,
+              ke2: 339,
+              ka1: 0.0018,
+              ka2: 0.0182,
+              kd: 0.0164,
+            },
+            xeq: {
+              Gp: 180,
+              Gt: 136.18855213996963,
+              Ip: 2.1160867725422206,
+              Il: 2.156181048232494,
+              Qsto1: 0,
+              Qsto2: 0,
+              Qgut: 0,
+              XL: 42.32173545084441,
+              I_: 42.32173545084441,
+              X: 0,
+              Isc1: 56.320463330739095,
+              Isc2: 50.75030761670995,
+            },
           },
+          meals: [
+            {
+              id: 2,
+              actual: {
+                start:
+                  new Date(Date.now()).toISOString().substr(0, 11) + "10:00:00",
+                duration: 50,
+                carbs: 20,
+              },
+              announcement: {
+                start:
+                  new Date(Date.now()).toISOString().substr(0, 11) + "10:00:00",
+                carbs: 80,
+                time:
+                  new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
+              },
+            },
+          ],
         },
       },
-      currentSzenario: {},
+      currentSzenario: {
+        name: "a",
+        patient: {
+          IIReq: 0.7687743244645887,
+          inputList: ["meal", "iir", "ibolus"],
+          outputList: ["G"],
+          parameterList: [
+            "BW",
+            "Gpeq",
+            "VG",
+            "k1",
+            "k2",
+            "VI",
+            "m1",
+            "m2",
+            "m4",
+            "m5",
+            "m6",
+            "HEeq",
+            "kmax",
+            "kmin",
+            "kabs",
+            "kgri",
+            "f",
+            "kp1",
+            "kp2",
+            "kp3",
+            "kp4",
+            "ki",
+            "Fcns",
+            "Vm0",
+            "Vmx",
+            "Km0",
+            "p2u",
+            "ke1",
+            "ke2",
+            "ka1",
+            "ka2",
+            "kd",
+          ],
+          stateList: [
+            "Gp",
+            "Gt",
+            "Ip",
+            "Il",
+            "Qsto1",
+            "Qsto2",
+            "Qgut",
+            "XL",
+            "I_",
+            "X",
+            "Isc1",
+            "Isc2",
+          ],
+          signalList: [
+            "RaI",
+            "E",
+            "EGP",
+            "Uid",
+            "Uii",
+            "I",
+            "Qsto",
+            "Ra",
+            "S",
+            "HE",
+            "m3",
+          ],
+          defaultParameters: {
+            BW: 75,
+            Gpeq: 180,
+            VG: 1.88,
+            k1: 0.065,
+            k2: 0.079,
+            VI: 0.05,
+            m1: 0.19,
+            m2: 0.484,
+            m4: 0.194,
+            m5: 0.0304,
+            m6: 0.6471,
+            HEeq: 0.6,
+            kmax: 0.0558,
+            kmin: 0.008,
+            kabs: 0.057,
+            kgri: 0.0558,
+            f: 0.9,
+            kp1: 2.7,
+            kp2: 0.0021,
+            kp3: 0.009,
+            kp4: 0.0618,
+            ki: 0.0079,
+            Fcns: 1,
+            Vm0: 2.5,
+            Vmx: 0.047,
+            Km0: 225.59,
+            p2u: 0.0331,
+            ke1: 0.0005,
+            ke2: 339,
+            ka1: 0.0018,
+            ka2: 0.0182,
+            kd: 0.0164,
+          },
+          parameters: {
+            BW: 75,
+            Gpeq: 180,
+            VG: 1.88,
+            k1: 0.065,
+            k2: 0.079,
+            VI: 0.05,
+            m1: 0.19,
+            m2: 0.484,
+            m4: 0.194,
+            m5: 0.0304,
+            m6: 0.6471,
+            HEeq: 0.6,
+            kmax: 0.0558,
+            kmin: 0.008,
+            kabs: 0.057,
+            kgri: 0.0558,
+            f: 0.9,
+            kp1: 2.7,
+            kp2: 0.0021,
+            kp3: 0.009,
+            kp4: 0.0618,
+            ki: 0.0079,
+            Fcns: 1,
+            Vm0: 2.5,
+            Vmx: 0.047,
+            Km0: 225.59,
+            p2u: 0.0331,
+            ke1: 0.0005,
+            ke2: 339,
+            ka1: 0.0018,
+            ka2: 0.0182,
+            kd: 0.0164,
+          },
+          xeq: {
+            Gp: 180,
+            Gt: 136.18855213996963,
+            Ip: 2.1160867725422206,
+            Il: 2.156181048232494,
+            Qsto1: 0,
+            Qsto2: 0,
+            Qgut: 0,
+            XL: 42.32173545084441,
+            I_: 42.32173545084441,
+            X: 0,
+            Isc1: 56.320463330739095,
+            Isc2: 50.75030761670995,
+          },
+        },
+        meals: [
+          {
+            id: 2,
+            actual: {
+              start: "2022-07-10T06:00:00.000Z",
+              duration: 15,
+              carbs: 15,
+            },
+            announcement: {
+              start: "2022-07-10T06:00:00.000Z",
+              carbs: 30,
+              time: "2022-07-10T04:00:00.000Z",
+            },
+          },
+        ],
+      },
     };
   },
-
   computed: {
     t0() {
       return new Date(this.t0String.valueOf());
     },
   },
-
+  mounted() {
+    this.$store.watch(
+      (state, getters) => state.targetValues.upper,
+      (newValue, oldValue) => {
+        this.run();
+      }
+    );
+    this.$store.watch(
+      (state, getters) => state.targetValues.lower,
+      (newValue, oldValue) => {
+        this.run();
+      }
+    );
+  },
   methods: {
+    loadSzenario() {
+      this.currentSzenario.patient = this.getPatient();
+      this.$store.commit("setSzenario", this.currentSzenario);
+      this.run();
+    },
     run() {
       this.resetCharts();
       this.runSimulation();
       this.updateCharts();
     },
     getController() {
-      console.log(this.controller);
       return controller;
     },
     getPatient() {
-      console.log(this.patientObject);
-      return this.patientObject;
+      //console.log(this.$store.state.patient);
+      return this.$store.state.patient;
     },
     getMeals() {
-      console.log(this.meals);
-      return JSON.parse(JSON.stringify(this.meals));
+      return JSON.parse(JSON.stringify(this.$store.state.meals));
     },
     getOptions() {
-      //const t0 = new Date((new Date(Date.now())).toDateString() +
-      //	" " + JSON.parse(JSON.stringify(this.t0)) + ":00")
       const t0 = new Date(this.t0.valueOf());
       const tmax = new Date(t0.valueOf() + this.tspan * 3600000);
       return { t0, tmax };
@@ -281,17 +634,13 @@ export default {
     },
     patientChanged(newPatient) {
       this.patientObject = newPatient;
-      this.patientData = Object.assign({}, newPatient);
+      this.$store.commit("setPatient", newPatient);
     },
     mealsChanged(newMeals) {
-      console.log("meals:");
-      console.log(newMeals);
       this.meals = newMeals;
     },
     eventsChanged(changedEvents) {
-      console.log("events");
-      console.log(changedEvents);
-      this.meals = changedEvents;
+      this.$store.commit("setMeal", changedEvents);
       this.run();
     },
     resetCharts() {
@@ -338,6 +687,14 @@ export default {
 
 <template>
   <div>
+    <select v-model="currentSzenario">
+      <option :value="szenario" :key="szenario" v-for="szenario in szenarios">
+        {{ szenario.name }}
+      </option>
+    </select>
+    <button type="button" @click="loadSzenario">Load Szenario</button>
+    {{ currentSzenario.name }}
+    <Meals />
     <div id="container">
       <div id="controls" class="box">
         <GlucoseStats ref="chartAGP" />

@@ -1,188 +1,200 @@
 <template>
-  <svg id="svg" class="svg" width="100%" height="700" ref="glucoseSvg">
-    <g v-if="datahere">
-      <g :key="meal.id" v-for="meal in myEvents">
-        <Event
-          title="A"
-          :x="scaleX(meal.announcement.start)"
-          :y="scaleFood(meal.announcement.carbs)"
-          :id="meal.id"
-          @eventChanged="eventChanged"
-        ></Event>
-        <Event
-          title="M"
-          :x="scaleX(meal.actual.start)"
-          :y="scaleFood(meal.actual.carbs)"
-          :id="meal.id"
-          @eventChanged="eventChanged"
-        ></Event>
-
+  <div class="graphContainer">
+    <div>
+      <h3 class="graphHeader">Glukose (mg/dl)</h3>
+      <h3 class="graphHeader rightHeader">Kohlenhydrate g</h3>
+    </div>
+    <svg id="svg" class="svg" width="100%" height="700" ref="glucoseSvg">
+      <g :key="tick" v-for="tick in yTicks">
+        <text
+          class="tickText"
+          text-anchor="end"
+          x="30"
+          dy=".25em"
+          :y="scaleY(tick)"
         >
+          {{ tick }}
+        </text>
+        <line
+          class="tick"
+          :y1="scaleY(tick)"
+          :y2="scaleY(tick)"
+          x1="40"
+          :x2="this.svgWidth - 30"
+        ></line>
       </g>
-      <g :key="bolus" v-for="bolus in boluses">
-        <Event
-          title="B"
-          :x="scaleX(bolus.t)"
-          :y="scaleAIDy(bolus.y)"
-          :id="bolus.id"
-          @eventChanged="eventChanged"
-        ></Event>
+      <g :key="tick" v-for="tick in xTicks">
+        <text
+          class="tickText"
+          text-anchor="middle"
+          y="395"
+          dy=".25em"
+          :x="scaleX(tick)"
+        >
+          {{ tick.getHours() }}
+        </text>
+        <line
+          class="tick"
+          :x1="scaleX(tick)"
+          :x2="scaleX(tick)"
+          y1="515"
+          y2="631"
+        ></line>
+        <text
+          class="tickText"
+          text-anchor="middle"
+          y="646"
+          dy=".25em"
+          :x="scaleX(tick)"
+        >
+          {{ tick.getHours() }}
+        </text>
+        <line
+          class="tick"
+          :x1="scaleX(tick)"
+          :x2="scaleX(tick)"
+          y1="15"
+          y2="380"
+        ></line>
       </g>
-    </g>
-    <text x="30" y="15">Glukose (mg/dl)</text>
-    <text text-anchor="end" :x="this.svgWidth - 30" y="15">
-      Kohlenhydrate g
-    </text>
+      <g :key="tick" v-for="tick in fTicks">
+        <text
+          class="tickText"
+          text-anchor="start"
+          :y="scaleFood(tick)"
+          dy=".25em"
+          :x="this.svgWidth - 20"
+        >
+          {{ tick }}
+        </text>
 
-    <path class="line" :d="line[0]" />
-    <path class="line" :d="basalLine[0]" />
-    <g :key="tick" v-for="tick in yTicks">
-      <text
-        class="tickText"
-        text-anchor="end"
-        x="25"
-        dy=".25em"
-        :y="scaleY(tick)"
-      >
-        {{ tick }}
-      </text>
+        <line
+          class="tick"
+          :y1="scaleFood(tick)"
+          :y2="scaleFood(tick)"
+          :x1="this.svgWidth - 30"
+          :x2="this.svgWidth - 25"
+        ></line>
+      </g>
       <line
-        class="tick"
-        :y1="scaleY(tick)"
-        :y2="scaleY(tick)"
-        x1="30"
+        class="stakeholderLine"
+        x1="150"
         :x2="this.svgWidth - 30"
-      ></line>
-    </g>
-    <g :key="tick" v-for="tick in xTicks">
-      <text
-        class="tickText"
-        text-anchor="middle"
-        y="395"
-        dy=".25em"
-        :x="scaleX(tick)"
-      >
-        {{ tick.getHours() }}
-      </text>
+        y1="420"
+        y2="420"
+      />
       <line
-        class="tick"
-        :x1="scaleX(tick)"
-        :x2="scaleX(tick)"
-        y1="515"
-        y2="631"
-      ></line>
+        class="stakeholderLine"
+        x1="135"
+        :x2="this.svgWidth - 30"
+        y1="460"
+        y2="460"
+      />
+      <g :key="tick" v-for="tick in AIDyTicks">
+        <text
+          class="tickText"
+          text-anchor="end"
+          :y="scaleAIDy(tick)"
+          dy=".25em"
+          x="30"
+        >
+          {{ tick }}
+        </text>
+
+        <line
+          class="tick"
+          :y1="scaleAIDy(tick)"
+          :y2="scaleAIDy(tick)"
+          x1="40"
+          :x2="this.svgWidth - 30"
+        ></line>
+      </g>
+      <BorderLine
+        :className="'upper'"
+        :x="this.svgWidth - 30"
+        :y="scaleY(this.$store.state.targetValues.upper)"
+      />
+      <BorderLine
+        :className="'lower'"
+        :x="this.svgWidth - 30"
+        :y="scaleY(this.$store.state.targetValues.lower)"
+      />
+      <path class="line" :d="line[0]" />
+      <path class="line" :d="basalLine[0]" />
+      <g v-if="datahere">
+        <g :key="meal" v-for="meal in meals">
+          <Event
+            title="A"
+            :x="scaleX(new Date(meal.announcement.start))"
+            :y="scaleFood(meal.announcement.carbs)"
+            :id="meal.id"
+            @eventChanged="eventChanged"
+          ></Event>
+          <Event
+            title="M"
+            :x="scaleX(new Date(meal.actual.start))"
+            :y="scaleFood(meal.actual.carbs)"
+            :id="meal.id"
+            @eventChanged="eventChanged"
+          ></Event>
+          >
+        </g>
+        <g :key="bolus" v-for="bolus in boluses">
+          <Event
+            title="B"
+            :x="scaleX(bolus.t)"
+            :y="scaleAIDy(bolus.y)"
+            :id="bolus.id"
+            @eventChanged="eventChanged"
+          ></Event>
+        </g>
+      </g>
+
       <text
-        class="tickText"
-        text-anchor="middle"
-        y="646"
-        dy=".25em"
-        :x="scaleX(tick)"
-      >
-        {{ tick.getHours() }}
-      </text>
-      <line
-        class="tick"
-        :x1="scaleX(tick)"
-        :x2="scaleX(tick)"
-        y1="30"
-        y2="380"
-      ></line>
-    </g>
-    <g :key="tick" v-for="tick in fTicks">
-      <text
-        class="tickText"
+        class="stakeholderText"
         text-anchor="start"
-        :y="scaleFood(tick)"
+        y="420"
         dy=".25em"
-        :x="this.svgWidth - 20"
+        x="40"
       >
-        {{ tick }}
+        Patient*innen
       </text>
-
-      <line
-        class="tick"
-        :y1="scaleFood(tick)"
-        :y2="scaleFood(tick)"
-        :x1="this.svgWidth - 30"
-        :x2="this.svgWidth - 25"
-      ></line>
-    </g>
-
-    <text
-      class="stakeholderText"
-      text-anchor="start"
-      y="420"
-      dy=".25em"
-      :x="30"
-    >
-      Patient*innen
-    </text>
-    <line
-      class="stakeholderLine"
-      x1="125"
-      :x2="this.svgWidth - 30"
-      y1="420"
-      y2="420"
-    />
-
-    <text
-      class="stakeholderText"
-      text-anchor="start"
-      y="460"
-      dy=".25em"
-      :x="30"
-    >
-      AID-System
-    </text>
-    <line
-      class="stakeholderLine"
-      x1="125"
-      :x2="this.svgWidth - 30"
-      y1="460"
-      y2="460"
-    />
-
-    <g :key="tick" v-for="tick in AIDyTicks">
       <text
-        class="tickText"
-        text-anchor="end"
-        :y="scaleAIDy(tick)"
+        class="stakeholderText"
+        text-anchor="start"
+        y="460"
         dy=".25em"
-        x="25"
+        x="40"
       >
-        {{ tick }}
+        AID-System
       </text>
+      <text x="40" y="500">Bolus U, Basalrate U/h</text>
 
-      <line
-        class="tick"
-        :y1="scaleAIDy(tick)"
-        :y2="scaleAIDy(tick)"
-        x1="30"
-        :x2="this.svgWidth - 30"
-      ></line>
-    </g>
-    <text x="30" y="500">Bolus U, Basalrate U/h</text>
-
-    <defs>
-      <linearGradient
-        id="gradient1"
-        x1="0"
-        x2="0"
-        :y1="scaleY(40)"
-        :y2="scaleY(280)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop :offset="borders[0]" style="stop-color: green; stop-opacity: 1" />
-        <stop :offset="borders[2]" style="stop-color: red; stop-opacity: 1" />
-      </linearGradient>
-    </defs>
-  </svg>
+      <defs>
+        <linearGradient
+          id="gradient1"
+          x1="0"
+          x2="0"
+          :y1="scaleY(40)"
+          :y2="scaleY(280)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop
+            :offset="borders[0]"
+            style="stop-color: green; stop-opacity: 1"
+          />
+          <stop :offset="borders[2]" style="stop-color: red; stop-opacity: 1" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
 </template>
 
 <script>
 import * as d3 from "d3";
 import { curveBasis, stackOffsetNone } from "d3";
 import Event from "./Event.vue";
+import BorderLine from "./BorderLine.vue";
 
 export default {
   data() {
@@ -192,12 +204,11 @@ export default {
       goals: [0, 0],
       yTicks: [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260],
       xTicks: [],
-      AIDyTicks: [0, 1, 2, 3, 4],
-      fTicks: [0, 10, 20, 30, 40],
+      AIDyTicks: [0, 2, 4, 6, 8, 10],
+      fTicks: [0, 20, 40, 60, 80, 100, 120, 140, 160],
       data: [],
       AidData: [],
       basalData: [],
-      meals: [],
       boluses: [],
       maxY: Number,
       minY: Number,
@@ -216,6 +227,7 @@ export default {
   },
   components: {
     Event,
+    BorderLine,
   },
   props: {
     events: Object,
@@ -225,6 +237,11 @@ export default {
     this.svgWidth = this.$refs.glucoseSvg.clientWidth - 10;
     this.getOffset();
   },
+  computed: {
+    meals() {
+      return this.$store.state.meals;
+    },
+  },
   methods: {
     update() {
       console.log("update");
@@ -232,36 +249,33 @@ export default {
     reset() {
       this.data = [];
       this.xTicks = [];
-      this.meals = [];
       this.myEvents = {};
       this.line = [];
       this.basalData = [];
       this.basalLine = [];
       this.boluses = [];
+      this.datahere = false;
     },
     eventChanged(changedEvent) {
-      console.log(changedEvent);
-      console.log(this.scaleTinvert(changedEvent.x).toISOString());
+      console.log(this.events);
+      let payload = this.meals;
       if (changedEvent.type == "M") {
-        for (let i = 0; i <= this.events.length - 1; i++) {
-          if (this.events[i].id == changedEvent.id) {
-            this.events[i].actual.carbs = this.scaleFinvert(changedEvent.y);
-            this.events[i].actual.start = this.scaleTinvert(changedEvent.x);
+        for (let i = 0; i <= payload.length - 1; i++) {
+          if (payload[i].id == changedEvent.id) {
+            payload[i].actual.carbs = this.scaleFinvert(changedEvent.y);
+            payload[i].actual.start = this.scaleTinvert(changedEvent.x);
           }
         }
       } else if (changedEvent.type == "A") {
-        for (let i = 0; i <= this.events.length - 1; i++) {
-          if (this.events[i].id == changedEvent.id) {
-            this.events[i].announcement.carbs = this.scaleFinvert(
-              changedEvent.y
-            );
-            this.events[i].announcement.start = this.scaleTinvert(
-              changedEvent.x
-            );
+        for (let i = 0; i <= payload.length - 1; i++) {
+          if (payload[i].id == changedEvent.id) {
+            payload[i].announcement.carbs = this.scaleFinvert(changedEvent.y);
+            payload[i].announcement.start = this.scaleTinvert(changedEvent.x);
           }
         }
       }
-      this.$emit("eventsChanged", JSON.parse(JSON.stringify(this.events)));
+      console.log(this.events);
+      this.$emit("eventsChanged", JSON.parse(JSON.stringify(payload)));
     },
     getOffset() {
       let top = this.scaleY(this.borders[1]);
@@ -277,21 +291,13 @@ export default {
       this.reset();
       this.maxY = simResults[0].y.G;
       this.minY = simResults[0].y.G;
-      let mealid = 0;
       for (let i = 0; i < simResults.length; i++) {
-        if (!isNaN(simResults[i].u.meal)) {
-          this.meals.push(simResults[i]);
-          this.meals[this.meals.length - 1].id = mealid;
-          mealid = mealid + 1;
-          console.log(this.meals);
-        }
         this.data.push({ t: simResults[i].t, y: simResults[i].y.Gp });
 
         if (simResults[i].u.ibolus > 0) {
+          //console.log(simResults[i]);
           this.boluses.push({ t: simResults[i].t, y: simResults[i].u.ibolus });
         }
-        //console.log(this.boluses);
-
         this.basalData.push({
           t: simResults[i].t,
           y: simResults[i].u.iir,
@@ -345,22 +351,22 @@ export default {
         .attr("fill", "none");*/
     },
     scaleFinvert(value) {
-      const fScale = d3.scaleLinear().domain([40, 0]).range([30, 380]);
+      const fScale = d3.scaleLinear().domain([160, 0]).range([40, 380]);
       return fScale.invert(value);
     },
     scaleY(value) {
-      const yScale = d3.scaleLinear().domain([260, 40]).range([30, 380]);
+      const yScale = d3.scaleLinear().domain([260, 40]).range([15, 380]);
       return yScale(value);
     },
     scaleAIDy(value) {
-      const scale = d3.scaleLinear().domain([4, 0]).range([515, 631]);
+      const scale = d3.scaleLinear().domain([10, 0]).range([515, 631]);
       return scale(value);
     },
     scaleX(value) {
       const xScale = d3
         .scaleTime()
         .domain([this.startDate, this.endDate])
-        .range([30, this.svgWidth - 30]);
+        .range([40, this.svgWidth - 30]);
       //d3.scaleLinear().domain([this.xTicks[0], this.xTicks[this.xTicks.length - 1]]).range([30, this.svgWidth]);
       return xScale(value);
     },
@@ -368,12 +374,12 @@ export default {
       const xScale = d3
         .scaleTime()
         .domain([this.startDate, this.endDate])
-        .range([30, this.svgWidth - 30]);
+        .range([40, this.svgWidth - 30]);
       //d3.scaleLinear().domain([this.xTicks[0], this.xTicks[this.xTicks.length - 1]]).range([30, this.svgWidth]);
       return xScale.invert(value);
     },
     scaleFood(value) {
-      const fScale = d3.scaleLinear().domain([40, 0]).range([30, 380]);
+      const fScale = d3.scaleLinear().domain([160, 0]).range([15, 380]);
       return fScale(value);
     },
   },
@@ -381,8 +387,14 @@ export default {
 </script>
 
 <style scoped>
-.svg {
-  border: 1px solid red;
+.graphContainer {
+  padding: 5px;
+}
+.graphHeader {
+  display: inline;
+}
+.rightHeader {
+  float: right;
 }
 .tick {
   stroke: #888888;
@@ -405,5 +417,16 @@ export default {
   stroke-width: 4;
   fill: none;
   stroke-dasharray: 10 4;
+}
+
+.upperBorder {
+  stroke: #ffcf52;
+  stroke-width: 3;
+  fill: none;
+}
+.lowerBorder {
+  stroke: #ffa1a1;
+  stroke-width: 3;
+  fill: none;
 }
 </style>

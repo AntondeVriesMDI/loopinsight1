@@ -1,43 +1,93 @@
 <template>
-  <svg width="100%" height="400">
-    <g :key="rect" v-for="rect in rects">
-      <text
-        text-anchor="middle"
-        :x="rect.center"
-        :y="this.yScale(rect.pr) - 10"
-      >
-        {{ rect.pr }}%
-      </text>
-      <rect
-        class="rect"
-        rx="7"
-        ry="7"
-        :x="rect.x"
-        :y="this.yScale(rect.pr)"
-        width="10%"
-        :height="this.yScale(0) - this.yScale(rect.pr)"
-        :id="rect.id"
-      ></rect>
-      <text
-        font-size=".7em"
-        text-anchor="middle"
-        :x="rect.center"
-        :y="this.yScale(0) + 15"
-      >
-        {{ rect.range }}
-      </text>
-    </g>
+  <div class="statsContainer">
+    <div>
+      <h3>Glukosestatistik</h3>
+    </div>
+    <svg class="stats" width="100%" height="365">
+      <g :key="rect" v-for="rect in rects">
+        <text
+          text-anchor="middle"
+          :x="rect.center"
+          :y="this.yScale(rect.pr) - 10"
+        >
+          {{ rect.pr }}%
+        </text>
+        <rect
+          class="rect"
+          rx="7"
+          ry="7"
+          :x="rect.x"
+          :y="this.yScale(rect.pr)"
+          width="10%"
+          :height="this.yScale(0) - this.yScale(rect.pr)"
+          :id="rect.id"
+        ></rect>
+        <text
+          font-size=".7em"
+          text-anchor="middle"
+          :x="rects.veryLow.center"
+          :y="this.yScale(0) + 15"
+        >
+          {{ "<" + rects.veryLow.range }}
+        </text>
+        <text
+          font-size=".7em"
+          text-anchor="middle"
+          :x="rects.low.center"
+          :y="this.yScale(0) + 15"
+        >
+          {{
+            rects.veryLow.range +
+            "-" +
+            Math.floor(this.$store.state.targetValues.lower)
+          }}
+        </text>
+        <text
+          font-size=".7em"
+          text-anchor="middle"
+          :x="rects.target.center"
+          :y="this.yScale(0) + 15"
+        >
+          {{
+            Math.floor(this.$store.state.targetValues.lower) +
+            "-" +
+            Math.floor(this.$store.state.targetValues.upper)
+          }}
+        </text>
+        <text
+          font-size=".7em"
+          text-anchor="middle"
+          :x="rects.high.center"
+          :y="this.yScale(0) + 15"
+        >
+          {{
+            Math.floor(this.$store.state.targetValues.upper) +
+            "-" +
+            rects.veryHigh.range
+          }}
+        </text>
 
-    <text x="5%" y="285" text-anchor="start">Mittelwert:</text>
-    <text x="95%" y="285" text-anchor="end">{{ averageGlucose }} mg/dl</text>
+        <text
+          font-size=".7em"
+          text-anchor="middle"
+          :x="rects.veryHigh.center"
+          :y="this.yScale(0) + 15"
+        >
+          {{ ">" + rects.veryHigh.range }}
+        </text>
+      </g>
 
-    <text x="5%" y="315" text-anchor="start">Variabilität:</text>
-    <text x="95%" y="315" text-anchor="end">{{ glucoseVariability }} %</text>
+      <text x="5%" y="270" text-anchor="start">Mittelwert:</text>
+      <text x="95%" y="270" text-anchor="end">{{ averageGlucose }} mg/dl</text>
 
-    <text x="5%" y="345" text-anchor="start">Glukosemanagement-</text>
-    <text x="5%" y="360" text-anchor="start">indikator (GMI):</text>
-    <text x="95%" y="360" text-anchor="end">{{ GMI }} %</text>
-  </svg>
+      <text x="5%" y="300" text-anchor="start">Variabilität:</text>
+      <text x="95%" y="300" text-anchor="end">{{ glucoseVariability }} %</text>
+
+      <text x="5%" y="330" text-anchor="start">Glukosemanagement-</text>
+      <text x="5%" y="345" text-anchor="start">indikator (GMI):</text>
+      <text x="95%" y="345" text-anchor="end">{{ GMI }} %</text>
+    </svg>
+  </div>
 </template>
 
 <script>
@@ -57,7 +107,7 @@ export default {
         veryLow: {
           val: 0,
           pr: 0,
-          range: "<54",
+          range: "54",
           x: "5%",
           id: "veryLow",
           center: "10%",
@@ -65,7 +115,7 @@ export default {
         low: {
           val: 0,
           pr: 0,
-          range: "54-69",
+          range: this.$store.state.targetValues.lower,
           x: "25%",
           id: "low",
           center: "30%",
@@ -89,7 +139,7 @@ export default {
         veryHigh: {
           val: 0,
           pr: 0,
-          range: ">250",
+          range: "250",
           x: "85%",
           id: "veryHigh",
           center: "90%",
@@ -99,7 +149,7 @@ export default {
   },
   methods: {
     yScale(value) {
-      const scale = d3.scaleLinear().domain([0, 100]).range([240, 30]);
+      const scale = d3.scaleLinear().domain([0, 100]).range([225, 30]);
       return scale(value);
     },
     setSimulationResults(simResults) {
@@ -138,13 +188,16 @@ export default {
       let G = y.G;
       if (G < 54) {
         this.rects.veryLow.val++;
-      } else if (G >= 54 && G < 67) {
+      } else if (G >= 54 && G < this.$store.state.targetValues.lower) {
         this.rects.low.val++;
       } else if (G > 250) {
         this.rects.veryHigh.val++;
-      } else if (G > 180 && G <= 250) {
+      } else if (G > this.$store.state.targetValues.upper && G <= 250) {
         this.rects.high.val++;
-      } else if (G >= 67 && G <= 189) {
+      } else if (
+        G >= this.$store.state.targetValues.lower &&
+        G <= this.$store.state.targetValues.upper
+      ) {
         this.rects.target.val++;
       }
 
@@ -186,8 +239,8 @@ export default {
 </script>
 
 <style>
-svg {
-  border: 1px solid red;
+.statsContainer {
+  padding: 5px;
 }
 .container {
   float: left;
@@ -196,19 +249,25 @@ svg {
   fill: blue;
 }
 
+.stats {
+  border: solid 2px #186ea8;
+  border-radius: 7px;
+  margin-top: 15px;
+}
+
 #veryLow {
-  fill: #ffcf52;
+  fill: #ffa1a1;
 }
 #low {
-  fill: #ffcf52;
+  fill: #ffd3d3;
 }
 #target {
   fill: #186ea8;
 }
 #high {
-  fill: #ffd3d3;
+  fill: #ffe5a1;
 }
 #veryHigh {
-  fill: #ffa1a1;
+  fill: #ffcf52;
 }
 </style>

@@ -1,4 +1,11 @@
 <template>
+  <line
+    class="eventLine"
+    :y1="this.initcoords.y"
+    :y2="this.lineEnd"
+    :x1="this.initcoords.x"
+    :x2="this.initcoords.x"
+  />
   <circle
     @mousedown="handleMouseDown"
     @mouseup="handleMouseUp"
@@ -10,13 +17,14 @@
   >
     {{ title }}</circle
   >
-  <line
-    class="eventLine"
-    :y1="this.initcoords.y"
-    :y2="this.lineEnd"
-    :x1="this.initcoords.x"
-    :x2="this.initcoords.x"
-  />
+  <circle
+    r="5"
+    :cx="this.initcoords.x"
+    :cy="this.lineEnd"
+    :class="object"
+    ref="events"
+  >
+  </circle>
 </template>
 
 <script>
@@ -64,8 +72,7 @@ export default {
 
         case "A":
           this.object = "action";
-          this.lineEnd = 420;
-          this.moovable = true;
+          this.lineEnd = 460;
 
           break;
       }
@@ -110,6 +117,7 @@ export default {
   //todo
 
   mounted() {
+    //console.log(this.x);
     this.changeColour();
     this.initcoords.x = this.x;
     this.initcoords.y = this.y;
