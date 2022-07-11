@@ -113,14 +113,15 @@
         :className="'upper'"
         :x="this.svgWidth - 30"
         :y="scaleY(this.$store.state.targetValues.upper)"
+        v-tooltip="'Obere Grenze:'"
       />
       <BorderLine
         :className="'lower'"
         :x="this.svgWidth - 30"
         :y="scaleY(this.$store.state.targetValues.lower)"
       />
-      <path class="line" :d="line[0]" />
-      <path class="line" :d="basalLine[0]" />
+      <path id="glucoseLine" class="line" :d="line[0]" />
+      <path id="bolusLine" :d="basalLine[0]" />
       <g v-if="datahere">
         <g :key="meal" v-for="meal in meals">
           <Event
@@ -175,15 +176,14 @@
           id="gradient1"
           x1="0"
           x2="0"
-          :y1="scaleY(40)"
-          :y2="scaleY(280)"
+          :y1="scaleY(this.$store.state.targetValues.upper + 1)"
+          :y2="scaleY(this.$store.state.targetValues.lower - 1)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop
-            :offset="borders[0]"
-            style="stop-color: green; stop-opacity: 1"
-          />
-          <stop :offset="borders[2]" style="stop-color: red; stop-opacity: 1" />
+          <stop offset="0%" style="stop-color: #ffcf52; stop-opacity: 1" />
+          <stop offset="1%" style="stop-color: #186ea8; stop-opacity: 1" />
+          <stop offset="99%" style="stop-color: #186ea8; stop-opacity: 1" />
+          <stop offset="100%" style="stop-color: #ffa1a1; stop-opacity: 1" />
         </linearGradient>
       </defs>
     </svg>
@@ -257,7 +257,6 @@ export default {
       this.datahere = false;
     },
     eventChanged(changedEvent) {
-      console.log(this.events);
       let payload = this.meals;
       if (changedEvent.type == "M") {
         for (let i = 0; i <= payload.length - 1; i++) {
@@ -274,7 +273,7 @@ export default {
           }
         }
       }
-      console.log(this.events);
+
       this.$emit("eventsChanged", JSON.parse(JSON.stringify(payload)));
     },
     getOffset() {
@@ -345,10 +344,10 @@ export default {
 
       this.datahere = true;
 
-      /**d3.select("path")
-        .attr("stroke-width", 3)
+      d3.select("#glucoseLine")
+        .attr("stroke-width", 5)
         .attr("stroke", "url(#gradient1)")
-        .attr("fill", "none");*/
+        .attr("fill", "none");
     },
     scaleFinvert(value) {
       const fScale = d3.scaleLinear().domain([160, 0]).range([40, 380]);
@@ -401,8 +400,6 @@ export default {
   stroke-width: 0.5;
 }
 .line {
-  stroke: #186ea8;
-  stroke-width: 3;
   fill: none;
 }
 .stakeholderLine {
@@ -412,6 +409,11 @@ export default {
   stroke-dasharray: 10 4;
 }
 
+#bolusLine {
+  stroke: #f5a83b;
+  stroke-width: 4;
+  fill: none;
+}
 .eventLine {
   stroke: #888888;
   stroke-width: 4;

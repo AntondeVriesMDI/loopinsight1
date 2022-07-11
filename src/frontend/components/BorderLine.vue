@@ -13,6 +13,9 @@
     r="5"
     cx="40"
     :cy="this.initcoords.y"
+    v-tooltip="
+      this.name + ' Grenze: ' + Math.floor(this.scaleYinvert(this.initcoords.y))
+    "
   />
 </template>
 
@@ -29,6 +32,7 @@ export default {
         x: 0,
         y: 0,
       },
+      name: "obere",
     };
   },
   props: {
@@ -40,6 +44,12 @@ export default {
     console.log(this.x);
     this.initcoords.y = this.y;
     this.initcoords.x = this.x;
+
+    if (this.className == "upper") {
+      this.name = "Obere";
+    } else {
+      this.name = "Untere";
+    }
     //console.log(this.x);
   },
   methods: {
@@ -86,13 +96,17 @@ export default {
 <style>
 .upper {
   stroke: #ffcf52;
-  stroke-width: 3;
+  stroke-width: 1.5;
   fill: #ffcf52;
 }
 
 .lower {
   stroke: #ffa1a1;
-  stroke-width: 3;
+  stroke-width: 1.5;
   fill: #ffa1a1;
+}
+
+circle {
+  stroke-width: 0;
 }
 </style>

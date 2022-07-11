@@ -232,7 +232,7 @@ export default {
                 start:
                   new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
                 duration: 15,
-                carbs: 100,
+                carbs: 70,
               },
               announcement: {
                 start:
@@ -696,10 +696,10 @@ export default {
     {{ currentSzenario.name }}
     <Meals />
     <div id="container">
-      <div id="controls" class="box">
+      <div id="controls">
         <GlucoseStats ref="chartAGP" />
       </div>
-      <div id="results" class="box">
+      <div id="results">
         <GlucoseChart
           @eventsChanged="eventsChanged"
           :events="this.meals"
