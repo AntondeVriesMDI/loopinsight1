@@ -716,24 +716,31 @@ export default {
 	</div>
 </nav>
 
-  <div class = "container-fluid">
+<div class ="container-fluid" id="scenario-drop">
     <select class="form-select" v-model="currentSzenario">
       <option :value="szenario" :key="szenario" v-for="szenario in szenarios">
         {{ szenario.name }}
       </option>
     </select>
-    <button type="button" class="btn btn-primary" id="loadbutton" @click="loadSzenario">Load Scenario</button>
-    {{ currentSzenario.name }}
+    <button type="button" class="btn btn-primary" id="loadbutton" @click="loadSzenario">Lade Szenario</button>
+    <!-- {{ currentSzenario.name }} -->
+</div>
+
+<div class ="container-fluid" id="scenario-box">
+  <div class="card">
+    <div class="card-header">
+      Szenario
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ senText }}</h5>
+      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    </div>
   </div>
+</div>
 
-
-  <Scenario class="card">
-    <p class="card-body">
-      Szenario: {{ scenario="keins" }}
-    </p>
-  </Scenario>
-
+  <!-- 
   <Meals />
+      -->
     <div id="container">
       <div id="controls">
         <GlucoseStats ref="chartAGP" />
@@ -746,6 +753,7 @@ export default {
         />
       </div>
     </div>
+
 
     <div id="container">
       <div class="box">
@@ -1009,7 +1017,7 @@ input#startbutton {
 #startbutton {
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
-   	background-color: var(--blue-dark);
+  background-color: var(--blue-dark);
 }
 .text {
 	color: white;
@@ -1027,14 +1035,27 @@ input#startbutton {
 #loadbutton {	
   padding-left: 1.5rem;
 	padding-right: 1.5rem;
+  margin-top: 1%;
+  margin-bottom: 1%;
   background-color: var(--blue-dark);
 }
 
 .form-select {
-  width: 50%;
+  position: center;
+  width: 40%;
   padding-left: 1.5rem;
-
+  margin-top: 1%;
 }
+
+#scenario-drop {
+  width: 40%;
+  height: auto;
+}
+
+#scenario-box {
+  height: 100%;
+}
+
 
 </style>
 

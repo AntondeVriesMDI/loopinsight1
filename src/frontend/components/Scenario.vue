@@ -1,7 +1,7 @@
 <template>
 
 <div class="container-fluid">
-<p>{{scenario}}</p>
+<p>{{ senText }}</p>
 </div>
 
     
@@ -12,38 +12,40 @@
 export default {
 
     props: {
-    scenario: String,
+    senText: String,
     },
 
     data() {
-        return {};
+        return {
+            scenario: String
+        };
 },
 methods:
 {
     changeText() {
-        switch(this.scenario) {
-            case keins:
-                this.scenario = "Keins";
+        switch(this.senText) {
+            case "keins":
+                this.scenario = "Keins <p></p> Diese Funktion unterstützt kein Szenario, damit ebenfalls individuelle Werte über Patient*in, Mahlzeiten und AID-System und Insulin eingestellt werden können.";
                 break;
-            case überzuckerung:
-                this.scenario = "Überzuckerung";
+            case "überzuckerung":
+                this.scenario = "Überzuckerung <p></p> Die Überzuckerung, med. Hyperglykämie, stellt einen zu hohen Glukosewert im Blut dar. <p></p> Hoher Bereich: 181-250 mg/dL <p></p> Sehr hoher Bereich: >250 mg/dL";
                 break;
-            case unterzuckerung:
-                this.scenario = "Unterzuckerung";
+            case "unterzuckerung":
+                this.scenario = "Unterzuckerung <p></p> Die Unterzuckerung, med. Hypoglykämie, stellt einen zu niedrigen Glukosewert im Blut dar. <p></p> Niedriger Bereich: 54-69 mg/dL <p></p> Sehr niedriger Bereich: <54 mg/dL";
                 break;
-            case aufstehen:
-                this.scenario = "Aufstehen";
+            case "aufstehen":
+                this.scenario = "Überzuckerung <p></p> Die Überzuckerung, med. Hyperglykämie, am Morgen stellt einen zu hohen Glukosewert im Blut dar. <p></p> Hoher Bereich: 181-250 mg/dL <p></p> Sehr hoher Bereich: >250 mg/dL";
                 break;
-            case alkohol:
+            case "alkohol":
                 this.scenario = "Alkoholkonsum";
                 break;
-            case überschätzung:
-                this.scenario = "Überschätzung";
+            case "überschätzung":
+                this.scenario = "Überschätzung <p></p> Zu große Mahlzeit für Menge an Insulin.";
                 break;
-            case unterschätzung:
-                this.scenario = "Unterschätzumg";
+            case "unterschätzung":
+                this.scenario = "Unterschätzung <p></p> Zu kleine Mahlzeit für Menge an Insulin.";
                 break;
-            case unangekündigt:
+            case "unangekündigt":
                 this.scenario = "Unangekündigte Mahlzeit";
                 break;
             }
@@ -58,9 +60,5 @@ mounted() {
 
 
 <style scoped>
-.container-fluid {
-  width: 40%;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
+
 </style>
