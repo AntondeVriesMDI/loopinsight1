@@ -6,14 +6,12 @@
 
 
 <script>
-import { onMounted } from '@vue/runtime-core';
 export default {
     props: {
         title: String
     },
 
     data(){
-
         return {
             object: String
         }
