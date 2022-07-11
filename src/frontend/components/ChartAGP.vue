@@ -4,8 +4,7 @@
    	Distributed under the MIT software license.
 	See https://lt1.org for further information.	*/
 
-
-import * as util from '../../common/util.js'
+import * as util from "../../common/util.js";
 
 export default {
   data() {
@@ -25,6 +24,10 @@ export default {
     };
   },
   methods: {
+    yScale(value) {
+      const scale = d3.scaleLinear().domain([0, 100]).range([0, 220]);
+      return scale(value);
+    },
     setSimulationResults(simResults) {
       this.reset();
       for (const result of simResults) {
@@ -96,8 +99,12 @@ export default {
 };
 </script>
 
-
 <template>
+  <svg class="svg" width="50%" height="400">
+    <rect class="box" width="100%" height="400">
+      <rect class="bar" width="20px" :height="this.scaleY(10)"></rect>
+    </rect>
+  </svg>
   <div class="lt1box box2 accordionbox" v-bind:class="{ boxactive: boxactive }">
     <h3 @click="[(boxactive = !boxactive)]">{{ $t("title") }}</h3>
     <div id="AGPstatistics" class="agpbox">
@@ -186,7 +193,6 @@ export default {
   </div>
 </template>
 
-
 <style scoped>
 div#AGPstatisticstable {
   display: grid;
@@ -206,7 +212,13 @@ th,
 td {
   border: none;
 }
-
+.svg {
+  border: 1px solid red;
+}
+.box {
+  border: 4px solid green;
+  fill: none;
+}
 
 /* span between TIRs */
 table#tirtable td {
@@ -251,7 +263,6 @@ div.agpbox > h4 {
   background-color: rgb(140, 25, 22, 1);
 }
 </style>
-
 
 <i18n locale="en">
 {
