@@ -9,6 +9,7 @@ import Simulator from '../core/Simulator.js';
 import { createI18n } from "vue-i18n";
 import VTooltip from 'v-tooltip';
 import 'v-tooltip/dist/v-tooltip.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
    
 // prepare Vue app
 const LT1VueApp = {

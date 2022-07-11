@@ -14,6 +14,7 @@ import ChartInsulinCarbs from './ChartInsulinCarbs.vue'
 import ChartControllerOutput from './ChartControllerOutput.vue'
 import ChartAGP from './ChartAGP.vue'
 import Event from './Event.vue'
+import '../assets/base.css'
 
 let controller = {}
 
@@ -45,15 +46,15 @@ export default {
 	},
 
 	components: {
-		ControllerConfig,
-		VirtualPatientConfig,
-		MealTable,
-		ChartGlucose,
-		ChartInsulinCarbs,
-		ChartControllerOutput,
-		ChartAGP,
-		Event
-	},
+    ControllerConfig,
+    VirtualPatientConfig,
+    MealTable,
+    ChartGlucose,
+    ChartInsulinCarbs,
+    ChartControllerOutput,
+    ChartAGP,
+    Event
+},
 
 	data() {
 		return {
@@ -72,7 +73,6 @@ export default {
 			return new Date(this.t0String.valueOf())
 		},
 	},
-	
 	methods: {
 		run() {
 			this.resetCharts();
@@ -155,12 +155,58 @@ export default {
 				}
 			}
 		},
+		increment() {	
+			this.tspan++;
+			console.log(this.tspan);
+		},
+		decrement() {
+			if (this.tspan > 0) {
+				this.tspan--;
+			}
+		}
 	},
 }
 </script>
 
 
 <template>
+<nav class="navbar navbar-expand-md flex">
+    <div id="generaloptions" class="container-fluid parameterlist d-flex">
+		<div class="d-flex flex-row align-items-center">
+			<form class="d-flex align-items-center pe-3">
+			<label class="text lead fs-6 px-2 ">{{$t("t0")}}</label>
+			<input class="form-control form-control-sm" v-model="t0String" type="datetime-local">
+		</form>
+			<p class="text lead fs-6 m-auto">{{$t("tspan")}}:</p>
+			<p class="text lead fs-5 m-auto px-2 "><b>{{tspan}}</b></p>
+			<button id="plus" type="button" class="btn btn-primary rounded-circle text-center" @click="increment">+</button>
+			<button id="plus" type="button" class="btn btn-primary rounded-circle text-center" @click="decrement">-</button>
+		</div>
+					<!--<ul class="navbar-nav">
+						<li class="nav-item ">
+							<label for="t0">
+								<div class="item-description">{{$t("t0")}}</div>
+								<div >
+									<input v-model="t0String" type="datetime-local">
+								</div>
+								<div class="item-unit"></div>
+							</label>
+						</li>
+						<li class="item">
+							<label for="t0">
+								<div class="item-description">{{$t("tspan")}}</div>
+								<div class="item-input">
+									<input v-model.number="tspan"
+										type="number" min="0" step="1">
+								</div>
+								<div class="item-unit">h</div>
+							</label>
+						</li>
+					</ul>-->
+					
+    <button type="button" class="btn btn-primary" id="startbutton" @click="run">{{$t("run")}}</button>
+	</div>
+</nav>
 	<div id="container">
 		<div id="controls" class="box">
 			<h2>{{$t("settings")}}</h2>
@@ -177,7 +223,7 @@ export default {
 			<MealTable :t0="t0"
 				@mealsChanged="mealsChanged">
 			</MealTable>
-			<div id="generalcontrols" 
+			<!-- <div id="generalcontrols" 
 				class="box2 accordionbox" 
 				v-bind:class="{boxactive: boxactive}">
 				<h3 @click="[boxactive=!boxactive]">{{$t("general")}}</h3>
@@ -203,9 +249,10 @@ export default {
 							</label>
 						</li>
 					</ul>
-				</div>
-			</div>		
-			<div>
+				</div> 
+			</div>	-->
+			<!--
+				<div>
 				<input type="button" 
 					id="startbutton" 
 					:value="$t('run')" 
@@ -216,7 +263,8 @@ export default {
 							placement: 'bottom',
 							width: 'fit-content',
 							padding: '2rem'},}">
-			</div>
+			</div>-->
+			
 		</div>	
 		<div id="results" class="box">
 			<h2>{{$t("results")}}</h2>
@@ -234,7 +282,10 @@ body {
 	overflow-y: scroll;
 	min-width: 440px;
 }
-
+input[type=datetime-local]:focus {
+	border-color: var(--orange-light);
+	box-shadow: 0 0 0 0.25rem var(--orange-light);
+}
 /* for wide screen, show results next to settings. otherwise below */
 div#container {
 	font-family: ABeeZee, Candara, Helvetica, sans-serif;
@@ -395,15 +446,32 @@ div#results {
 	margin-top: 1rem;
 }
 
-/* button "run simulation" */
+/* button "run simulation" 
 input#startbutton {
 	float: right;
 	margin: 1rem; 
 	padding: 0.5rem; 
 	font-size: 1rem; 
 	padding: 0.5em;
-}
+}*/
 
+.navbar{
+    background: var(--blue-light);
+    border-top: 2px solid var(--blue-dark);
+}
+#startbutton {
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+   	background-color: var(--blue-dark);
+}
+.text {
+	color: white;
+}
+#plus {
+	background-color: var(--orange-light);
+	border: 0;
+	margin: auto;
+}
 /* tooltip popups */
 .v-popper__inner {
 	font-family: ABeeZee, Candara, Helvetica, sans-serif;
