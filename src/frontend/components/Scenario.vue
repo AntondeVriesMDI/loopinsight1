@@ -1,32 +1,35 @@
 <template>
-  <div class="row" id="scenario-drop">
-    <div class="col-lg-6">
-    <select class="form-select" v-model="currentSzenario">
-      <option :value="szenario" :key="szenario" v-for="szenario in szenarios">
-        {{ szenario.name }}
-      </option>
-    </select>
-    <button
-      type="button"
-      class="btn btn-primary"
-      id="loadbutton"
-      @click="loadSzenario"
-    >
-      Lade Szenario
-    </button>
-    </div>
-  </div>
-
-  <div class="row" id="scenario-box">
-    <div class="col-lg-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{ this.currentSzenario.name }}</h5>
-        <p class="card-text">
-          {{ this.currentSzenario.text }}
-        </p>
+  <div class="container">
+    <div class="row" id="scenario-drop">
+      <div class="col-4">
+        <select class="form-select" v-model="currentSzenario">
+          <option
+            :value="szenario"
+            :key="szenario"
+            v-for="szenario in szenarios"
+          >
+            {{ szenario.name }}
+          </option>
+        </select>
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="loadbutton"
+          @click="loadSzenario"
+        >
+          Lade Szenario
+        </button>
       </div>
-    </div>
+      <div class="col-8" id="scenarioBox">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ this.currentSzenario.name }}</h5>
+            <p class="card-text">
+              {{ this.currentSzenario.text }}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -1134,7 +1137,6 @@ export default {
   padding-right: 1%;
   margin-left: 1%;
   margin-bottom: 1%;
-
 }
 
 #scenario-box {

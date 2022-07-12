@@ -242,9 +242,6 @@ export default {
 .statsContainer {
   padding: 5px;
 }
-.container {
-  float: left;
-}
 .rect {
   fill: blue;
 }
