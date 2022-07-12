@@ -54,7 +54,12 @@ export default {
       tspan: 8,
       isActive: false,
       activeTab: 0,
-      tabList: ["Szenarien", "Pa", "Tab3", "Tab4"],
+      tabList: [
+        "Szenarien",
+        "Mahlzeiten",
+        "Patient*innen",
+        "Insulin und AID-System",
+      ],
       events: {
         meals: this.meals,
       },
@@ -174,7 +179,7 @@ export default {
       <div id="generaloptions" class="container-fluid parameterlist d-flex">
         <div class="d-flex flex-row align-items-center">
           <form class="d-flex align-items-center pe-5">
-            <label class="text lead fs-6 px-2">{{ $t("t0") }}</label>
+            <label class="text lead fs-6 px-2">{{ $t("t0") }}:</label>
             <input
               id="date-picker"
               class="form-control form-control-sm"
@@ -217,7 +222,7 @@ export default {
       </div>
     </nav>
     <div id="options-Holder" class="container-fill">
-      <ul class="nav nav-pills nav-fill pt-4">
+      <ul class="nav nav-pills justify-content-md-center">
         <li
           class="nav-item p-3"
           :key="tab.title"
@@ -235,21 +240,16 @@ export default {
           ></a>
         </li>
       </ul>
-      <ul class="nav nav-pills col-sm-3 flex-column">
-        <li
-          class="nav-item p-3"
-          :value="szenario"
-          :key="szenario"
-          v-for="szenario in szenarios"
-        >
-          <a
-            class="nav-link nav-item active"
-            v-text="szenario.name"
-            href="#"
-          ></a>
-        </li>
-      </ul>
-    <Scenario @szenarioChanged="szenarioChanged" />
+
+      <div v-show="activeTab == 0">
+        <Scenario @szenarioChanged="szenarioChanged" />
+      </div>
+      <div v-show="activeTab == 1">
+        <Meals />
+      </div>
+      <div v-show="activeTab == 2"></div>
+
+      <div v-show="active == 3"></div>
     </div>
  
     <!--<Meals />-->
@@ -419,24 +419,6 @@ select {
   align-items: center;
   margin-bottom: 10px;
 }
-#container .parameterlist hr {
-  width: 80%;
-}
-
-#container .parameterlist ul {
-  padding: 0;
-  width: 100%;
-}
-#container .parameterlist li {
-  display: grid;
-  width: 100%;
-}
-#container .item-description .item-input .item-unit {
-  display: inline-grid;
-}
-#container .item-input input {
-  width: 6em;
-}
 
 /* Chart canvas */
 .canvasdiv {
@@ -456,7 +438,7 @@ input#startbutton {
 
 #date-picker {
   color: white;
-  border-color: var(--blue-light);
+  border: 2px solid var(--orange-light);
   background-color: var(--blue-light);
 }
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
@@ -466,7 +448,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 .navbar {
   background: var(--blue-light);
-  border-top: 2px solid var(--blue-dark);
+  border-bottom: 3px solid var(--blue-dark);
 }
 #startbutton {
   padding-left: 1.5rem;
@@ -484,6 +466,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 #options-Holder {
   background: var(--blue-light-tr);
+  padding-bottom: 1em;
+  margin-bottom: 3em;
 }
 #options-Holder .inactive {
   color: var(--blue-dark);

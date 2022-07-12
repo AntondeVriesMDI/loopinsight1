@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <div class="row d-flex justify-content-center" id="scenario-drop">
-      <div class="col" align="left">
+  <div class="container-fill px-3">
+    <div class="row justify-content-md-center">
+      <div class="col-2" id="scenario-drop">
         <select class="form-select" v-model="currentSzenario">
           <option
             :value="szenario"
@@ -13,20 +13,40 @@
         </select>
         <button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-primary align-self-end"
           id="loadbutton"
           @click="loadSzenario"
         >
-          Lade Szenario
+          Szenario laden
         </button>
       </div>
-      <div class="col" id="scenarioBox">
+      <div class="col-5" id="scenario-box">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ this.currentSzenario.name }}</h5>
-            <p class="card-text">
-              {{ this.currentSzenario.text }}
-            </p>
+            <div class="card-text">
+              <p>{{ this.currentSzenario.text }}</p>
+              <h6 v-if="this.currentSzenario.name != 'Kein Szenario'">
+                Relevante Parameter:
+              </h6>
+              <div
+                class="container"
+                :key="parameter"
+                v-for="parameter in this.currentSzenario.parameter"
+              >
+                <div class="row p-1">
+                  <input
+                    class="col-md-auto"
+                    :type="parameter.type"
+                    :min="parameter.min"
+                    v-model="
+                      this.currentSzenario.meals[0][parameter.sz][parameter.zs]
+                    "
+                  />
+                  <div class="col-md-auto">{{ parameter.name }}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -213,6 +233,22 @@ export default {
         Überzuckerung: {
           name: "Hyperglykämie",
           text: "Durch eine angekündigkte Mahlzeit wird eine Überzuckerung ausgelöst, die durch das AID-System bewältigt werden kann.",
+          parameter: [
+            {
+              type: "Number",
+              min: 0,
+              name: "Tatsächliche Kohlenhydrate",
+              sz: "actual",
+              zs: "carbs",
+            },
+            {
+              type: "Number",
+              min: 0,
+              name: "Angekündigte Kohlenhydrate",
+              sz: "announcement",
+              zs: "carbs",
+            },
+          ],
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -383,6 +419,22 @@ export default {
         Unterzuckerung: {
           name: "Hypoglykämie",
           text: "Eine angekündigkte Mahlzeit wird nicht eingenommen. Dadurch ensteht einer Hypoglykämie. Diese kann nicht durch das AID-System bewältigt werden.",
+          parameter: [
+            {
+              type: "Number",
+              min: 0,
+              name: "Tatsächliche Kohlenhydrate",
+              sz: "actual",
+              zs: "carbs",
+            },
+            {
+              type: "Number",
+              min: 0,
+              name: "Angekündigte Kohlenhydrate",
+              sz: "announcement",
+              zs: "carbs",
+            },
+          ],
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -553,6 +605,22 @@ export default {
         Unterschätzung: {
           name: "Unterschätzung",
           text: "Eine angekündigkte Mahlzeit wird unterschätzt. Dadurch isst der:die Patient:in mehr Kohlenhydrate als angegeben. Es entsteht eine Hyperglykämie.",
+          parameter: [
+            {
+              type: "Number",
+              min: 0,
+              name: "Tatsächliche Kohlenhydrate",
+              sz: "actual",
+              zs: "carbs",
+            },
+            {
+              type: "Number",
+              min: 0,
+              name: "Angekündigte Kohlenhydrate",
+              sz: "announcement",
+              zs: "carbs",
+            },
+          ],
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -723,6 +791,22 @@ export default {
         Überschätzung: {
           name: "Überschätzung",
           text: "Eine angekündigkte Mahlzeit wird überschätzt. Dadurch isst der:die Patient:in weniger Kohlenhydrate als angegeben. Es entsteht eine Hypoglykämie.",
+          parameter: [
+            {
+              type: "Number",
+              min: 0,
+              name: "Tatsächliche Kohlenhydrate",
+              sz: "actual",
+              zs: "carbs",
+            },
+            {
+              type: "Number",
+              min: 0,
+              name: "Angekündigte Kohlenhydrate",
+              sz: "announcement",
+              zs: "carbs",
+            },
+          ],
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -1116,8 +1200,7 @@ export default {
 
 <style scoped>
 #loadbutton {
-  position: center;
-  width: 40%;
+  width: 100%;
   padding-right: 1.5rem;
   margin-top: 1%;
   margin-bottom: 1%;
@@ -1125,8 +1208,7 @@ export default {
 }
 
 .form-select {
-  position: center;
-  width: 40%;
+  width: 100%;
   padding-left: 1.5rem;
   margin-top: 1%;
 }

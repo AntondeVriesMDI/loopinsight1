@@ -1,38 +1,52 @@
 <template>
-  <div>
-    <div>
-      <p>Tatsächliche Mahlzeit</p>
-      <input
-        type="Number"
-        id="act_carbs"
-        min="0"
-        v-model="meal.actual.carbs"
-        @change="changed"
-      />
-      <input
-        type="datetime-local"
-        id="actual_start"
-        :min="this.$store.state.options.t0"
-        v-model="tStartString"
-        @change="changed"
-      />
-    </div>
-    <div>
-      <p>Ankündigung</p>
-      <input
-        type="Number"
-        id="ann_carbs"
-        min="0"
-        v-model="meal.announcement.carbs"
-        @change="changed"
-      />
-      <input
-        type="datetime-local"
-        id="actual_start"
-        :min="this.$store.state.options.t0"
-        v-model="tAnnouncedStartString"
-        @change="changed"
-      />
+  <div class="card rounded-7 border container">
+    <div class="card-body">
+      <h5 class="card-title">Mahlzeit</h5>
+      <div class="mb-3">
+        <label for="act_carbs"> Kohlenhydrate (g) </label>
+        <input
+          class="form-control mb-1"
+          type="Number"
+          id="act_carbs"
+          min="0"
+          placeholder="Kohlenhydrate (g)"
+          v-model="meal.actual.carbs"
+          @change="changed"
+        />
+        <label for="actual_start"> Zeitpunkt </label>
+        <input
+          class="form-control mb-1"
+          type="datetime-local"
+          id="actual_start"
+          placeholder="Zeitpunkt"
+          :min="this.$store.state.options.t0"
+          v-model="tStartString"
+          @change="changed"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="ann-carbs"> Angekündigte Kohlenhydrate (g) </label>
+        <input
+          class="form-control mb-1"
+          type="Number"
+          id="ann_carbs"
+          min="0"
+          placeholder="Angekündigte Kohlenhydrate (g)"
+          v-model="meal.announcement.carbs"
+          @change="changed"
+        />
+        <label for="actual_start"> Angekündigter Zeitpunkt </label>
+        <input
+          class="form-control mb-1"
+          type="datetime-local"
+          id="ann_start"
+          placeholder="Angekündigte Ko"
+          :min="this.$store.state.options.t0"
+          v-model="tAnnouncedStartString"
+          @change="changed"
+        />
+      </div>
     </div>
   </div>
 </template>
