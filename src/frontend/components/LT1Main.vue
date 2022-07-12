@@ -222,7 +222,7 @@ export default {
       </div>
     </nav>
     <div id="options-Holder" class="container-fill">
-      <ul class="nav nav-pills nav-justified">
+      <ul class="nav nav-pills">
         <li
           class="nav-item p-3"
           :key="tab.title"
@@ -418,24 +418,6 @@ select {
   align-items: center;
   margin-bottom: 10px;
 }
-#container .parameterlist hr {
-  width: 80%;
-}
-
-#container .parameterlist ul {
-  padding: 0;
-  width: 100%;
-}
-#container .parameterlist li {
-  display: grid;
-  width: 100%;
-}
-#container .item-description .item-input .item-unit {
-  display: inline-grid;
-}
-#container .item-input input {
-  width: 6em;
-}
 
 /* Chart canvas */
 .canvasdiv {
@@ -484,6 +466,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 #options-Holder {
   background: var(--blue-light-tr);
   padding-bottom: 1em;
+  height: 100%;
 }
 #options-Holder .inactive {
   color: var(--blue-dark);

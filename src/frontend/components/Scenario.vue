@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <div class="row" id="scenario-drop">
-      <div class="col-4">
+  <div class="container-fill px-3">
+    <div class="row justify-content-md-start">
+      <div class="col-2" id="scenario-drop">
         <select class="form-select" v-model="currentSzenario">
           <option
             :value="szenario"
@@ -13,14 +13,14 @@
         </select>
         <button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-primary align-self-end"
           id="loadbutton"
           @click="loadSzenario"
         >
-          Lade Szenario
+          Szenario laden
         </button>
       </div>
-      <div class="col-8" id="scenarioBox">
+      <div class="col" id="scenario-box">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ this.currentSzenario.name }}</h5>
@@ -1200,8 +1200,7 @@ export default {
 
 <style scoped>
 #loadbutton {
-  position: center;
-  width: 40%;
+  width: 100%;
   padding-right: 1.5rem;
   margin-top: 1%;
   margin-bottom: 1%;
@@ -1209,25 +1208,8 @@ export default {
 }
 
 .form-select {
-  position: center;
-  width: 40%;
+  width: 100%;
   padding-left: 1.5rem;
   margin-top: 1%;
-}
-
-#scenario-drop {
-  position: left;
-  width: 100%;
-  padding-right: 1%;
-  margin-left: 1%;
-  margin-bottom: 1%;
-}
-
-#scenario-box {
-  height: 100%;
-  width: 100%;
-  margin-left: 1%;
-  padding-bottom: 1%;
-  padding-top: 1%;
 }
 </style>
