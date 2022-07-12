@@ -14,18 +14,9 @@
     :cy="this.initcoords.y"
     :class="object"
     ref="events"
+    v-tooltip="this.name"
   >
   </circle>
-
-  <circle
-    @mousedown="handleMouseDown"
-    @mouseup="handleMouseUp"
-    r="20"
-    :cx="this.initcoords.x"
-    :cy="this.lineEnd"
-    :class="object"
-    ref="events"
-  />
   <g v-if="title == 'M'">
     <svg
       :x="this.initcoords.x - 20"
@@ -46,6 +37,7 @@
         stroke-linejoin: round;
         stroke-miterlimit: 2;
       "
+      v-tooltip="this.name"
     >
       <g>
         <circle cx="40" cy="40" r="40" style="fill: rgb(46, 194, 126)" />
@@ -81,6 +73,7 @@
         stroke-linejoin: round;
         stroke-miterlimit: 2;
       "
+      v-tooltip="this.name"
     >
       <g>
         <circle cx="40" cy="40" r="40" style="fill: rgb(245, 168, 59)" />
@@ -116,6 +109,7 @@
         stroke-linejoin: round;
         stroke-miterlimit: 2;
       "
+      v-tooltip="this.name"
     >
       <g>
         <circle cx="40" cy="40" r="40" style="fill: rgb(24, 110, 168)" />

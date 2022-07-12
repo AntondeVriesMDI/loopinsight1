@@ -205,7 +205,7 @@ export default {
       yTicks: [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260],
       xTicks: [],
       AIDyTicks: [0, 2, 4, 6, 8, 10],
-      fTicks: [0, 20, 40, 60, 80, 100, 120, 140, 160],
+      fTicks: [0, 20, 40, 60, 80, 100],
       data: [],
       AidData: [],
       basalData: [],
@@ -286,7 +286,7 @@ export default {
       this.offsets[3] = (bottom / spam) * 100 - 100;
     },
     setSimulationResults(simResults) {
-      //console.log(simResults);
+      console.log(simResults);
       this.reset();
       this.maxY = simResults[0].y.G;
       this.minY = simResults[0].y.G;
@@ -350,7 +350,7 @@ export default {
         .attr("fill", "none");
     },
     scaleFinvert(value) {
-      const fScale = d3.scaleLinear().domain([160, 0]).range([40, 380]);
+      const fScale = d3.scaleLinear().domain([100, 0]).range([40, 380]);
       return fScale.invert(value);
     },
     scaleY(value) {
@@ -378,7 +378,7 @@ export default {
       return xScale.invert(value);
     },
     scaleFood(value) {
-      const fScale = d3.scaleLinear().domain([160, 0]).range([15, 380]);
+      const fScale = d3.scaleLinear().domain([100, 0]).range([15, 380]);
       return fScale(value);
     },
   },

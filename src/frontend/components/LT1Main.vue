@@ -18,7 +18,7 @@ import GlucoseChart from "./GlucoseChart.vue";
 import { computed } from "vue";
 import GlucoseStats from "./GlucoseStats.vue";
 import Meals from "./Meals.vue";
-import Legend from "./Legend.vue";
+import InsulinStats from "./InsulinStats.vue";
 import "../assets/base.css";
 
 let controller = {};
@@ -62,7 +62,7 @@ export default {
     GlucoseChart,
     GlucoseStats,
     Meals,
-    Legend,
+    InsulinStats,
   },
 
   data() {
@@ -753,7 +753,7 @@ export default {
     <div id="container">
       <div id="controls">
         <GlucoseStats ref="chartAGP" />
-        <Legend />
+        <!--<InsulinStats />-->
       </div>
       <div id="results">
         <GlucoseChart
