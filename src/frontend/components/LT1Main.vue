@@ -9,9 +9,6 @@ import { defaults } from "chart.js";
 import ControllerConfig from "./ControllerConfig.vue";
 import VirtualPatientConfig from "./VirtualPatientConfig.vue";
 import MealTable from "./MealTable.vue";
-import ChartGlucose from "./ChartGlucose.vue";
-import ChartInsulinCarbs from "./ChartInsulinCarbs.vue";
-import ChartControllerOutput from "./ChartControllerOutput.vue";
 import ChartAGP from "./ChartAGP.vue";
 import Event from "./Event.vue";
 import GlucoseChart from "./GlucoseChart.vue";
@@ -30,33 +27,12 @@ export default {
 
   beforeMount() {
     // set default options for Chart
-    defaults.maintainAspectRatio = false;
-    defaults.responsive = true;
-    defaults.animation = false;
-    defaults.normalized = true;
-
-    defaults.elements.point.pointStyle = "line";
-    defaults.elements.point.radius = 0;
-
-    defaults.plugins.legend.labels.usePointStyle = true;
-
-    defaults.interaction.mode = "nearest";
-    defaults.interaction.axis = "xy";
-    defaults.interaction.intersect = false;
-
-    defaults.scale.title.display = true;
-    defaults.scale.title.text = this.$t("timeaxis");
-
-    defaults.parsing = false;
   },
 
   components: {
     ControllerConfig,
     VirtualPatientConfig,
     MealTable,
-    ChartGlucose,
-    ChartInsulinCarbs,
-    ChartControllerOutput,
     ChartAGP,
     Event,
     GlucoseChart,
@@ -620,9 +596,7 @@ export default {
       this.run();
     },
     run() {
-      this.resetCharts();
       this.runSimulation();
-      this.updateCharts();
     },
     getController() {
       return controller;
@@ -654,14 +628,6 @@ export default {
     eventsChanged(changedEvents) {
       this.$store.commit("setMeal", changedEvents);
       this.run();
-    },
-    resetCharts() {
-      // todo
-      for (const chart in this.$refs) {
-        try {
-          this.$refs[chart].reset();
-        } catch {}
-      }
     },
     propagateSimulationResults(simResults) {
       //console.log(simResults);
@@ -763,81 +729,14 @@ export default {
         />
       </div>
     </div>
-    <div id="container">
-      <div class="box">
-        <h2>{{ $t("settings") }}</h2>
-        <Event title="M"> </Event>
-        <Event title="B"> </Event>
-        <Event title="A"> </Event>
-        <ControllerConfig
-          @controllerChanged="controllerChanged"
-          v-bind:patient="patientData"
-        >
-        </ControllerConfig>
-        <VirtualPatientConfig @patientChanged="patientChanged">
-        </VirtualPatientConfig>
-        <MealTable :t0="t0" @mealsChanged="mealsChanged"> </MealTable>
-        <div
-          id="generalcontrols"
-          class="box2 accordionbox"
-          v-bind:class="{ boxactive: boxactive }"
-        >
-          <h3 @click="[(boxactive = !boxactive)]">{{ $t("general") }}</h3>
-          <div id="generaloptions" class="parameterlist">
-            <ul>
-              <li class="item">
-                <label for="t0">
-                  <div class="item-description">{{ $t("t0") }}</div>
-                  <div>
-                    <input v-model="t0String" type="datetime-local" />
-                  </div>
-                  <div class="item-unit"></div>
-                </label>
-              </li>
-              <li class="item">
-                <label for="t0">
-                  <div class="item-description">{{ $t("tspan") }}</div>
-                  <div class="item-input">
-                    <input
-                      v-model.number="tspan"
-                      type="number"
-                      min="0"
-                      step="1"
-                    />
-                  </div>
-                  <div class="item-unit">h</div>
-                </label>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <input
-            type="button"
-            id="startbutton"
-            :value="$t('run')"
-            @click="run"
-            v-tooltip="{
-              global: true,
-              theme: {
-                placement: 'bottom',
-                width: 'fit-content',
-                padding: '2rem',
-              },
-            }"
-          />
-        </div>
-      </div>
-      <div class="box">
-        <h2>{{ $t("results") }}</h2>
-
-        <ChartGlucose ref="chartGlucose" />
-        <ChartInsulinCarbs
-          ref="chartInsulinCarbs"
-          @selectLog="controllerDataHover"
-        />
-        <ChartControllerOutput ref="chartControllerOutput" />
-      </div>
+    <div v-show="false">
+      <ControllerConfig
+        @controllerChanged="controllerChanged"
+        v-bind:patient="patientData"
+      >
+      </ControllerConfig>
+      <VirtualPatientConfig @patientChanged="patientChanged">
+      </VirtualPatientConfig>
     </div>
   </div>
 </template>
