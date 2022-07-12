@@ -1,5 +1,6 @@
 <template>
-  <div class="container-fluid" id="scenario-drop">
+  <div class="row" id="scenario-drop">
+    <div class="col-lg-6">
     <select class="form-select" v-model="currentSzenario">
       <option :value="szenario" :key="szenario" v-for="szenario in szenarios">
         {{ szenario.name }}
@@ -13,10 +14,11 @@
     >
       Lade Szenario
     </button>
-    <!-- {{ currentSzenario.name }} -->
+    </div>
   </div>
 
-  <div class="container-fluid" id="scenario-box">
+  <div class="row" id="scenario-box">
+    <div class="col-lg-6">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">{{ this.currentSzenario.name }}</h5>
@@ -24,6 +26,7 @@
           {{ this.currentSzenario.text }}
         </p>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -1110,7 +1113,8 @@ export default {
 
 <style scoped>
 #loadbutton {
-  padding-left: 1.5rem;
+  position: center;
+  width: 40%;
   padding-right: 1.5rem;
   margin-top: 1%;
   margin-bottom: 1%;
@@ -1125,11 +1129,19 @@ export default {
 }
 
 #scenario-drop {
-  width: 40%;
-  height: auto;
+  position: left;
+  width: 100%;
+  padding-right: 1%;
+  margin-left: 1%;
+  margin-bottom: 1%;
+
 }
 
 #scenario-box {
   height: 100%;
+  width: 100%;
+  margin-left: 1%;
+  padding-bottom: 1%;
+  padding-top: 1%;
 }
 </style>
