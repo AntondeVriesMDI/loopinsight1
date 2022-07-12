@@ -1,8 +1,8 @@
 :root {
-    --blue-dark: #186EA8;
-    --blue-light: #57BCFF;
-    --blue-light-tr: rgba(87,188,255,0.3);
-    --orange-dark: #A86607;
-    --orange-light: #F5A83B;
-    --red: #F55453;
+  --blue-dark: #186ea8;
+  --blue-light: #57bcff;
+  --blue-light-tr: rgba(87, 188, 255, 0.3);
+  --orange-dark: #a86607;
+  --orange-light: #f5a83b;
+  --red: #f55453;
 }

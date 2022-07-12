@@ -193,7 +193,7 @@ export default {
               type="button"
               @click="increment"
             >
-              +
+              <span style="font-size: large; font-weight: bold">+</span>
             </button>
             <button
               id="hour"
@@ -201,7 +201,7 @@ export default {
               type="button"
               @click="decrement"
             >
-              -
+              <span style="font-size: large; font-weight: bold">-</span>
             </button>
           </div>
         </div>
@@ -479,6 +479,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   background-color: var(--orange-light);
   border-radius: 30%;
   border: 0;
+  min-width: 40px;
   margin: auto;
 }
 #options-Holder {
