@@ -174,7 +174,7 @@ export default {
       <div id="generaloptions" class="container-fluid parameterlist d-flex">
         <div class="d-flex flex-row align-items-center">
           <form class="d-flex align-items-center pe-5">
-            <label class="text lead fs-6 px-2">{{ $t("t0") }}</label>
+            <label class="text lead fs-6 px-2">{{ $t("t0") }}:</label>
             <input
               id="date-picker"
               class="form-control form-control-sm"
@@ -217,7 +217,7 @@ export default {
       </div>
     </nav>
     <div id="options-Holder" class="container-fill">
-      <ul class="nav nav-pills nav-fill pt-4">
+      <ul class="nav nav-pills nav-justified">
         <li
           class="nav-item p-3"
           :key="tab.title"
@@ -455,7 +455,7 @@ input#startbutton {
 
 #date-picker {
   color: white;
-  border-color: var(--blue-light);
+  border: 2px solid var(--orange-light);
   background-color: var(--blue-light);
 }
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
@@ -465,7 +465,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 .navbar {
   background: var(--blue-light);
-  border-top: 2px solid var(--blue-dark);
+  border-bottom: 3px solid var(--blue-dark);
 }
 #startbutton {
   padding-left: 1.5rem;
