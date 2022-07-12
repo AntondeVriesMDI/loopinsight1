@@ -19,7 +19,7 @@ import { computed } from "vue";
 import GlucoseStats from "./GlucoseStats.vue";
 import Meals from "./Meals.vue";
 import Scenario from "./Scenario.vue";
-import '../assets/base.css'
+import "../assets/base.css";
 
 let controller = {};
 
@@ -62,7 +62,7 @@ export default {
     GlucoseChart,
     GlucoseStats,
     Meals,
-    Scenario
+    Scenario,
   },
 
   data() {
@@ -76,512 +76,6 @@ export default {
       tspan: 8,
       events: {
         meals: this.meals,
-      },
-      szenarios: {
-        Unterschätzung: {
-          name: "Unterschätzung",
-          patient: {
-            IIReq: 0.7687743244645887,
-            inputList: ["meal", "iir", "ibolus"],
-            outputList: ["G"],
-            parameterList: [
-              "BW",
-              "Gpeq",
-              "VG",
-              "k1",
-              "k2",
-              "VI",
-              "m1",
-              "m2",
-              "m4",
-              "m5",
-              "m6",
-              "HEeq",
-              "kmax",
-              "kmin",
-              "kabs",
-              "kgri",
-              "f",
-              "kp1",
-              "kp2",
-              "kp3",
-              "kp4",
-              "ki",
-              "Fcns",
-              "Vm0",
-              "Vmx",
-              "Km0",
-              "p2u",
-              "ke1",
-              "ke2",
-              "ka1",
-              "ka2",
-              "kd",
-            ],
-            stateList: [
-              "Gp",
-              "Gt",
-              "Ip",
-              "Il",
-              "Qsto1",
-              "Qsto2",
-              "Qgut",
-              "XL",
-              "I_",
-              "X",
-              "Isc1",
-              "Isc2",
-            ],
-            signalList: [
-              "RaI",
-              "E",
-              "EGP",
-              "Uid",
-              "Uii",
-              "I",
-              "Qsto",
-              "Ra",
-              "S",
-              "HE",
-              "m3",
-            ],
-            defaultParameters: {
-              BW: 75,
-              Gpeq: 180,
-              VG: 1.88,
-              k1: 0.065,
-              k2: 0.079,
-              VI: 0.05,
-              m1: 0.19,
-              m2: 0.484,
-              m4: 0.194,
-              m5: 0.0304,
-              m6: 0.6471,
-              HEeq: 0.6,
-              kmax: 0.0558,
-              kmin: 0.008,
-              kabs: 0.057,
-              kgri: 0.0558,
-              f: 0.9,
-              kp1: 2.7,
-              kp2: 0.0021,
-              kp3: 0.009,
-              kp4: 0.0618,
-              ki: 0.0079,
-              Fcns: 1,
-              Vm0: 2.5,
-              Vmx: 0.047,
-              Km0: 225.59,
-              p2u: 0.0331,
-              ke1: 0.0005,
-              ke2: 339,
-              ka1: 0.0018,
-              ka2: 0.0182,
-              kd: 0.0164,
-            },
-            parameters: {
-              BW: 75,
-              Gpeq: 180,
-              VG: 1.88,
-              k1: 0.065,
-              k2: 0.079,
-              VI: 0.05,
-              m1: 0.19,
-              m2: 0.484,
-              m4: 0.194,
-              m5: 0.0304,
-              m6: 0.6471,
-              HEeq: 0.6,
-              kmax: 0.0558,
-              kmin: 0.008,
-              kabs: 0.057,
-              kgri: 0.0558,
-              f: 0.9,
-              kp1: 2.7,
-              kp2: 0.0021,
-              kp3: 0.009,
-              kp4: 0.0618,
-              ki: 0.0079,
-              Fcns: 1,
-              Vm0: 2.5,
-              Vmx: 0.047,
-              Km0: 225.59,
-              p2u: 0.0331,
-              ke1: 0.0005,
-              ke2: 339,
-              ka1: 0.0018,
-              ka2: 0.0182,
-              kd: 0.0164,
-            },
-            xeq: {
-              Gp: 180,
-              Gt: 136.18855213996963,
-              Ip: 2.1160867725422206,
-              Il: 2.156181048232494,
-              Qsto1: 0,
-              Qsto2: 0,
-              Qgut: 0,
-              XL: 42.32173545084441,
-              I_: 42.32173545084441,
-              X: 0,
-              Isc1: 56.320463330739095,
-              Isc2: 50.75030761670995,
-            },
-          },
-          meals: [
-            {
-              id: 2,
-              actual: {
-                start:
-                  new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
-                duration: 15,
-                carbs: 70,
-              },
-              announcement: {
-                start:
-                  new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
-                carbs: 50,
-                time:
-                  new Date(Date.now()).toISOString().substr(0, 11) + "06:00:00",
-              },
-            },
-          ],
-        },
-        Überschätzung: {
-          name: "Überschätzung",
-          patient: {
-            IIReq: 0.7687743244645887,
-            inputList: ["meal", "iir", "ibolus"],
-            outputList: ["G"],
-            parameterList: [
-              "BW",
-              "Gpeq",
-              "VG",
-              "k1",
-              "k2",
-              "VI",
-              "m1",
-              "m2",
-              "m4",
-              "m5",
-              "m6",
-              "HEeq",
-              "kmax",
-              "kmin",
-              "kabs",
-              "kgri",
-              "f",
-              "kp1",
-              "kp2",
-              "kp3",
-              "kp4",
-              "ki",
-              "Fcns",
-              "Vm0",
-              "Vmx",
-              "Km0",
-              "p2u",
-              "ke1",
-              "ke2",
-              "ka1",
-              "ka2",
-              "kd",
-            ],
-            stateList: [
-              "Gp",
-              "Gt",
-              "Ip",
-              "Il",
-              "Qsto1",
-              "Qsto2",
-              "Qgut",
-              "XL",
-              "I_",
-              "X",
-              "Isc1",
-              "Isc2",
-            ],
-            signalList: [
-              "RaI",
-              "E",
-              "EGP",
-              "Uid",
-              "Uii",
-              "I",
-              "Qsto",
-              "Ra",
-              "S",
-              "HE",
-              "m3",
-            ],
-            defaultParameters: {
-              BW: 75,
-              Gpeq: 180,
-              VG: 1.88,
-              k1: 0.065,
-              k2: 0.079,
-              VI: 0.05,
-              m1: 0.19,
-              m2: 0.484,
-              m4: 0.194,
-              m5: 0.0304,
-              m6: 0.6471,
-              HEeq: 0.6,
-              kmax: 0.0558,
-              kmin: 0.008,
-              kabs: 0.057,
-              kgri: 0.0558,
-              f: 0.9,
-              kp1: 2.7,
-              kp2: 0.0021,
-              kp3: 0.009,
-              kp4: 0.0618,
-              ki: 0.0079,
-              Fcns: 1,
-              Vm0: 2.5,
-              Vmx: 0.047,
-              Km0: 225.59,
-              p2u: 0.0331,
-              ke1: 0.0005,
-              ke2: 339,
-              ka1: 0.0018,
-              ka2: 0.0182,
-              kd: 0.0164,
-            },
-            parameters: {
-              BW: 75,
-              Gpeq: 180,
-              VG: 1.88,
-              k1: 0.065,
-              k2: 0.079,
-              VI: 0.05,
-              m1: 0.19,
-              m2: 0.484,
-              m4: 0.194,
-              m5: 0.0304,
-              m6: 0.6471,
-              HEeq: 0.6,
-              kmax: 0.0558,
-              kmin: 0.008,
-              kabs: 0.057,
-              kgri: 0.0558,
-              f: 0.9,
-              kp1: 2.7,
-              kp2: 0.0021,
-              kp3: 0.009,
-              kp4: 0.0618,
-              ki: 0.0079,
-              Fcns: 1,
-              Vm0: 2.5,
-              Vmx: 0.047,
-              Km0: 225.59,
-              p2u: 0.0331,
-              ke1: 0.0005,
-              ke2: 339,
-              ka1: 0.0018,
-              ka2: 0.0182,
-              kd: 0.0164,
-            },
-            xeq: {
-              Gp: 180,
-              Gt: 136.18855213996963,
-              Ip: 2.1160867725422206,
-              Il: 2.156181048232494,
-              Qsto1: 0,
-              Qsto2: 0,
-              Qgut: 0,
-              XL: 42.32173545084441,
-              I_: 42.32173545084441,
-              X: 0,
-              Isc1: 56.320463330739095,
-              Isc2: 50.75030761670995,
-            },
-          },
-          meals: [
-            {
-              id: 2,
-              actual: {
-                start:
-                  new Date(Date.now()).toISOString().substr(0, 11) + "10:00:00",
-                duration: 50,
-                carbs: 20,
-              },
-              announcement: {
-                start:
-                  new Date(Date.now()).toISOString().substr(0, 11) + "10:00:00",
-                carbs: 80,
-                time:
-                  new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
-              },
-            },
-          ],
-        },
-      },
-      currentSzenario: {
-        name: "a",
-        patient: {
-          IIReq: 0.7687743244645887,
-          inputList: ["meal", "iir", "ibolus"],
-          outputList: ["G"],
-          parameterList: [
-            "BW",
-            "Gpeq",
-            "VG",
-            "k1",
-            "k2",
-            "VI",
-            "m1",
-            "m2",
-            "m4",
-            "m5",
-            "m6",
-            "HEeq",
-            "kmax",
-            "kmin",
-            "kabs",
-            "kgri",
-            "f",
-            "kp1",
-            "kp2",
-            "kp3",
-            "kp4",
-            "ki",
-            "Fcns",
-            "Vm0",
-            "Vmx",
-            "Km0",
-            "p2u",
-            "ke1",
-            "ke2",
-            "ka1",
-            "ka2",
-            "kd",
-          ],
-          stateList: [
-            "Gp",
-            "Gt",
-            "Ip",
-            "Il",
-            "Qsto1",
-            "Qsto2",
-            "Qgut",
-            "XL",
-            "I_",
-            "X",
-            "Isc1",
-            "Isc2",
-          ],
-          signalList: [
-            "RaI",
-            "E",
-            "EGP",
-            "Uid",
-            "Uii",
-            "I",
-            "Qsto",
-            "Ra",
-            "S",
-            "HE",
-            "m3",
-          ],
-          defaultParameters: {
-            BW: 75,
-            Gpeq: 180,
-            VG: 1.88,
-            k1: 0.065,
-            k2: 0.079,
-            VI: 0.05,
-            m1: 0.19,
-            m2: 0.484,
-            m4: 0.194,
-            m5: 0.0304,
-            m6: 0.6471,
-            HEeq: 0.6,
-            kmax: 0.0558,
-            kmin: 0.008,
-            kabs: 0.057,
-            kgri: 0.0558,
-            f: 0.9,
-            kp1: 2.7,
-            kp2: 0.0021,
-            kp3: 0.009,
-            kp4: 0.0618,
-            ki: 0.0079,
-            Fcns: 1,
-            Vm0: 2.5,
-            Vmx: 0.047,
-            Km0: 225.59,
-            p2u: 0.0331,
-            ke1: 0.0005,
-            ke2: 339,
-            ka1: 0.0018,
-            ka2: 0.0182,
-            kd: 0.0164,
-          },
-          parameters: {
-            BW: 75,
-            Gpeq: 180,
-            VG: 1.88,
-            k1: 0.065,
-            k2: 0.079,
-            VI: 0.05,
-            m1: 0.19,
-            m2: 0.484,
-            m4: 0.194,
-            m5: 0.0304,
-            m6: 0.6471,
-            HEeq: 0.6,
-            kmax: 0.0558,
-            kmin: 0.008,
-            kabs: 0.057,
-            kgri: 0.0558,
-            f: 0.9,
-            kp1: 2.7,
-            kp2: 0.0021,
-            kp3: 0.009,
-            kp4: 0.0618,
-            ki: 0.0079,
-            Fcns: 1,
-            Vm0: 2.5,
-            Vmx: 0.047,
-            Km0: 225.59,
-            p2u: 0.0331,
-            ke1: 0.0005,
-            ke2: 339,
-            ka1: 0.0018,
-            ka2: 0.0182,
-            kd: 0.0164,
-          },
-          xeq: {
-            Gp: 180,
-            Gt: 136.18855213996963,
-            Ip: 2.1160867725422206,
-            Il: 2.156181048232494,
-            Qsto1: 0,
-            Qsto2: 0,
-            Qgut: 0,
-            XL: 42.32173545084441,
-            I_: 42.32173545084441,
-            X: 0,
-            Isc1: 56.320463330739095,
-            Isc2: 50.75030761670995,
-          },
-        },
-        meals: [
-          {
-            id: 2,
-            actual: {
-              start: "2022-07-10T06:00:00.000Z",
-              duration: 15,
-              carbs: 15,
-            },
-            announcement: {
-              start: "2022-07-10T06:00:00.000Z",
-              carbs: 30,
-              time: "2022-07-10T04:00:00.000Z",
-            },
-          },
-        ],
       },
     };
   },
@@ -605,19 +99,14 @@ export default {
     );
   },
   methods: {
-    increment() {	
-			this.tspan++;
-			console.log(this.tspan);
-		},
-		decrement() {
-			if (this.tspan > 0) {
-				this.tspan--;
-			}
-		},
-    loadSzenario() {
-      this.currentSzenario.patient = this.getPatient();
-      this.$store.commit("setSzenario", this.currentSzenario);
-      this.run();
+    increment() {
+      this.tspan++;
+      console.log(this.tspan);
+    },
+    decrement() {
+      if (this.tspan > 0) {
+        this.tspan--;
+      }
     },
     run() {
       this.resetCharts();
@@ -650,6 +139,10 @@ export default {
     },
     mealsChanged(newMeals) {
       this.meals = newMeals;
+    },
+    szenarioChanged() {
+      console.log("hier");
+      this.run();
     },
     eventsChanged(changedEvents) {
       this.$store.commit("setMeal", changedEvents);
@@ -700,45 +193,50 @@ export default {
 <template>
   <div>
     <nav class="navbar navbar-expand-md flex">
-    <div id="generaloptions" class="container-fluid parameterlist d-flex">
-		<div class="d-flex flex-row align-items-center">
-			<form class="d-flex align-items-center pe-3">
-			<label class="text lead fs-6 px-2 ">{{$t("t0")}}</label>
-			<input class="form-control form-control-sm" v-model="t0String" type="datetime-local">
-		</form>
-			<p class="text lead fs-6 m-auto">{{$t("tspan")}}:</p>
-			<p class="text lead fs-5 m-auto px-2 "><b>{{tspan}}</b></p>
-			<button id="plus" type="button" class="btn btn-primary rounded-circle text-center" @click="increment">+</button>
-			<button id="plus" type="button" class="btn btn-primary rounded-circle text-center" @click="decrement">-</button>
-		</div>
-					
-    <button type="button" class="btn btn-primary" id="startbutton" @click="run">{{$t("run")}}</button>
-	</div>
-</nav>
+      <div id="generaloptions" class="container-fluid parameterlist d-flex">
+        <div class="d-flex flex-row align-items-center">
+          <form class="d-flex align-items-center pe-3">
+            <label class="text lead fs-6 px-2">{{ $t("t0") }}</label>
+            <input
+              class="form-control form-control-sm"
+              v-model="t0String"
+              type="datetime-local"
+            />
+          </form>
+          <p class="text lead fs-6 m-auto">{{ $t("tspan") }}:</p>
+          <p class="text lead fs-5 m-auto px-2">
+            <b>{{ tspan }}</b>
+          </p>
+          <button
+            id="plus"
+            type="button"
+            class="btn btn-primary rounded-circle text-center"
+            @click="increment"
+          >
+            +
+          </button>
+          <button
+            id="plus"
+            type="button"
+            class="btn btn-primary rounded-circle text-center"
+            @click="decrement"
+          >
+            -
+          </button>
+        </div>
 
-<div class ="container-fluid" id="scenario-drop">
-    <select class="form-select" v-model="currentSzenario">
-      <option :value="szenario" :key="szenario" v-for="szenario in szenarios">
-        {{ szenario.name }}
-      </option>
-    </select>
-    <button type="button" class="btn btn-primary" id="loadbutton" @click="loadSzenario">Lade Szenario</button>
-    <!-- {{ currentSzenario.name }} -->
-</div>
-
-<div class ="container-fluid" id="scenario-box">
-  <div class="card">
-    <div class="card-header">
-      Szenario
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">{{ senText }}</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    </div>
-  </div>
-</div>
-
-  <!-- 
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="startbutton"
+          @click="run"
+        >
+          {{ $t("run") }}
+        </button>
+      </div>
+    </nav>
+    <Scenario @szenarioChanged="szenarioChanged" />
+    <!-- 
   <Meals />
       -->
     <div id="container">
@@ -753,7 +251,6 @@ export default {
         />
       </div>
     </div>
-
 
     <div id="container">
       <div class="box">
@@ -839,9 +336,9 @@ body {
   overflow-y: scroll;
   min-width: 440px;
 }
-input[type=datetime-local]:focus {
-	border-color: var(--orange-light);
-	box-shadow: 0 0 0 0.25rem var(--orange-light);
+input[type="datetime-local"]:focus {
+  border-color: var(--orange-light);
+  box-shadow: 0 0 0 0.25rem var(--orange-light);
 }
 /* for wide screen, show results next to settings. otherwise below */
 div#container {
@@ -1010,53 +507,27 @@ input#startbutton {
 	padding: 0.5em;
 }*/
 
-.navbar{
-    background: var(--blue-light);
-    border-top: 2px solid var(--blue-dark);
+.navbar {
+  background: var(--blue-light);
+  border-top: 2px solid var(--blue-dark);
 }
 #startbutton {
-	padding-left: 1.5rem;
-	padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   background-color: var(--blue-dark);
 }
 .text {
-	color: white;
+  color: white;
 }
 #plus {
-	background-color: var(--orange-light);
-	border: 0;
-	margin: auto;
+  background-color: var(--orange-light);
+  border: 0;
+  margin: auto;
 }
 /* tooltip popups */
 .v-popper__inner {
   font-family: ABeeZee, Candara, Helvetica, sans-serif;
 }
-
-#loadbutton {	
-  padding-left: 1.5rem;
-	padding-right: 1.5rem;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  background-color: var(--blue-dark);
-}
-
-.form-select {
-  position: center;
-  width: 40%;
-  padding-left: 1.5rem;
-  margin-top: 1%;
-}
-
-#scenario-drop {
-  width: 40%;
-  height: auto;
-}
-
-#scenario-box {
-  height: 100%;
-}
-
-
 </style>
 
 }

@@ -7,9 +7,9 @@ import * as Vue from "vue";
 import LT1Main from "./components/LT1Main.vue";
 import Simulator from "../core/Simulator.js";
 import { createI18n } from "vue-i18n";
-import VTooltip from 'v-tooltip';
-import 'v-tooltip/dist/v-tooltip.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import VTooltip from "v-tooltip";
+import "v-tooltip/dist/v-tooltip.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 //import store from "./store";
 import { createStore, createLogger } from "vuex";
 
@@ -241,6 +241,7 @@ const store = createStore({
       state.patient = payload;
     },
     setSzenario: (state, payload) => {
+      console.log("hieeer");
       state.meals = payload.meals;
       state.patient = payload.patient;
     },

@@ -1,30 +1,32 @@
 <template>
-  <line
-    class="eventLine"
-    :y1="this.initcoords.y"
-    :y2="this.lineEnd"
-    :x1="this.initcoords.x"
-    :x2="this.initcoords.x"
-  />
-  <circle
-    @mousedown="handleMouseDown"
-    @mouseup="handleMouseUp"
-    r="10"
-    :cx="this.initcoords.x"
-    :cy="this.initcoords.y"
-    :class="object"
-    ref="events"
-  >
-    {{ title }}</circle
-  >
-  <circle
-    r="5"
-    :cx="this.initcoords.x"
-    :cy="this.lineEnd"
-    :class="object"
-    ref="events"
-  >
-  </circle>
+  <g v-if="this.y < 380 || this.title == 'B'">
+    <line
+      class="eventLine"
+      :y1="this.initcoords.y"
+      :y2="this.lineEnd"
+      :x1="this.initcoords.x"
+      :x2="this.initcoords.x"
+    />
+    <circle
+      @mousedown="handleMouseDown"
+      @mouseup="handleMouseUp"
+      r="10"
+      :cx="this.initcoords.x"
+      :cy="this.initcoords.y"
+      :class="object"
+      ref="events"
+    >
+      {{ title }}</circle
+    >
+    <circle
+      r="5"
+      :cx="this.initcoords.x"
+      :cy="this.lineEnd"
+      :class="object"
+      ref="events"
+    >
+    </circle>
+  </g>
 </template>
 
 <script>
@@ -119,6 +121,7 @@ export default {
   mounted() {
     //console.log(this.x);
     this.changeColour();
+    console.log(this.y);
     this.initcoords.x = this.x;
     this.initcoords.y = this.y;
     //console.log(this.x);
