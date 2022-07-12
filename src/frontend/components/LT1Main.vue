@@ -61,7 +61,7 @@ export default {
     GlucoseChart,
     GlucoseStats,
     Meals,
-  },
+},
 
   data() {
     return {
@@ -72,6 +72,9 @@ export default {
       myCharts: [],
       t0String: new Date(Date.now()).toISOString().substr(0, 11) + "06:00:00",
       tspan: 8,
+      isActive : false,
+      activeTab: 0,
+      tabList : ["Szenarien", "Pa", "Tab3", "Tab4"],
       events: {
         meals: this.meals,
       },
@@ -416,7 +419,7 @@ export default {
         },
       },
       currentSzenario: {
-        name: "a",
+        name: "Kein Szenario",
         patient: {
           IIReq: 0.7687743244645887,
           inputList: ["meal", "iir", "ibolus"],
@@ -612,6 +615,13 @@ export default {
 				this.tspan--;
 			}
 		},
+    selectTab(i) {
+      this.activeTab = i;
+      // loop over all the tabs
+      this.tabList.forEach((tab, index) => {
+        tab.isActive = (index === i)
+      })
+    },
     loadSzenario() {
       this.currentSzenario.patient = this.getPatient();
       this.$store.commit("setSzenario", this.currentSzenario);
@@ -700,24 +710,33 @@ export default {
     <nav class="navbar navbar-expand-md flex">
     <div id="generaloptions" class="container-fluid parameterlist d-flex">
 		<div class="d-flex flex-row align-items-center">
-			<form class="d-flex align-items-center pe-3">
+			<form class="d-flex align-items-center pe-5">
 			<label class="text lead fs-6 px-2 ">{{$t("t0")}}</label>
-			<input class="form-control form-control-sm" v-model="t0String" type="datetime-local">
+			<input id="date-picker" class="form-control form-control-sm" v-model="t0String" type="datetime-local">
 		</form>
 			<p class="text lead fs-6 m-auto">{{$t("tspan")}}:</p>
-			<p class="text lead fs-5 m-auto px-2 "><b>{{tspan}}</b></p>
-			<button id="plus" type="button" class="btn btn-primary rounded-circle text-center" @click="increment">+</button>
-			<button id="plus" type="button" class="btn btn-primary rounded-circle text-center" @click="decrement">-</button>
+			<p class="text lead fs-5 m-auto px-3 "><b>{{tspan}} h</b></p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button id="hour" class="btn btn-primary me-md-1" type="button" @click="increment">+</button>
+          <button id="hour" class="btn btn-primary " type="button" @click="decrement">-</button>
+        </div>
 		</div>
 					
     <button type="button" class="btn btn-primary" id="startbutton" @click="run">{{$t("run")}}</button>
 	</div>
 </nav>
-    <select v-model="currentSzenario">
-      <option :value="szenario" :key="szenario" v-for="szenario in szenarios">
-        {{ szenario.name }}
-      </option>
-    </select>
+<div id="options-Holder" class="container-fill">
+    <ul class="nav nav-pills nav-fill pt-4">
+  <li class="nav-item p-3" :key="tab.title" v-for="(tab, index) in tabList" @click="selectTab(index)">
+    <a class="nav-link" v-text="tab" :class="{'nav-item active': index=== activeTab, 'nav-item inactive': index!== activeTab}" href="#"></a>
+  </li>
+</ul>
+<ul class="nav nav-pills col-sm-3 flex-column">
+  <li class="nav-item p-3" :value="szenario" :key="szenario" v-for="szenario in szenarios">
+    <a class="nav-link nav-item active" v-text="szenario.name" href="#"></a>
+    </li>
+</ul>
+</div>
     <button type="button" @click="loadSzenario">Load Szenario</button>
     {{ currentSzenario.name }}
     <Meals />
@@ -988,6 +1007,16 @@ input#startbutton {
 	padding: 0.5em;
 }*/
 
+#date-picker {
+  color: white;
+  border-color: var(--blue-light);
+  background-color: var(--blue-light);
+}
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 1;
+  filter: invert(1);
+}
 .navbar{
     background: var(--blue-light);
     border-top: 2px solid var(--blue-dark);
@@ -1000,10 +1029,23 @@ input#startbutton {
 .text {
 	color: white;
 }
-#plus {
+#hour {
 	background-color: var(--orange-light);
+  border-radius: 30%;
 	border: 0;
 	margin: auto;
+}
+#options-Holder {
+    background: var(--blue-light-tr)   
+}
+#options-Holder .inactive{
+  color: var(--blue-dark);
+  border: 2px solid var(--blue-light);
+  background: white;
+}
+#options-Holder a {
+  background: var(--blue-dark);
+  border: 2px solid var(--blue-dark);
 }
 /* tooltip popups */
 .v-popper__inner {
