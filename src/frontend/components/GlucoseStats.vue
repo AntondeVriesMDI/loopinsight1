@@ -1,7 +1,7 @@
 <template>
   <div class="statsContainer">
     <div>
-      <h3>Glukosestatistik</h3>
+      <text>Glukosestatistik</text>
     </div>
     <svg class="stats" width="100%" height="365">
       <g :key="rect" v-for="rect in rects">
