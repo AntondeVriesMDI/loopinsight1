@@ -39,7 +39,7 @@ export default {
       szenarios: {
         keinSzenario: {
           name: "Kein Szenario",
-          text: "Diese Funktion unterstützt kein Szenario, damit ebenfalls individuelle Werte über Patient*in, Mahlzeiten und AID-System und Insulin eingestellt werden können.",
+          text: "Diese Funktion unterstützt kein Szenario, damit ebenfalls individuelle Werte über Patient:in, Mahlzeiten und AID-System und Insulin eingestellt werden können.",
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -206,7 +206,7 @@ export default {
         },
         Überzuckerung: {
           name: "Hyperglykämie",
-          text: "Durch eine angekündigkte Mahlzeit wird eine Überzuckerung ausgelöst, die durch das AID-System bewältigt werden kann. ",
+          text: "Durch eine angekündigkte Mahlzeit wird eine Überzuckerung ausgelöst, die durch das AID-System bewältigt werden kann.",
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -376,7 +376,7 @@ export default {
         },
         Unterzuckerung: {
           name: "Hypoglykämie",
-          text: "Eine angekndigkte Mahlzeit wird nicht eingenommen. Dadurch ensteht einer Hypoglykämie. Diese kann nicht durch das AID-System bewältigt werden!",
+          text: "Eine angekündigkte Mahlzeit wird nicht eingenommen. Dadurch ensteht einer Hypoglykämie. Diese kann nicht durch das AID-System bewältigt werden.",
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -546,7 +546,7 @@ export default {
         },
         Unterschätzung: {
           name: "Unterschätzung",
-          text: "Eine angekündigkte Mahlzeit wird unterschätzt. Dadurch isst der/die Patient/in mehr Kohlenhydrate als angegeben. Es entsteht eine Hyperglykämie.",
+          text: "Eine angekündigkte Mahlzeit wird unterschätzt. Dadurch isst der:die Patient:in mehr Kohlenhydrate als angegeben. Es entsteht eine Hyperglykämie.",
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -716,7 +716,7 @@ export default {
         },
         Überschätzung: {
           name: "Überschätzung",
-          text: "Eine angekündigkte Mahlzeit wird überschätzt. Dadurch isst der/die Patient/in weniger Kohlenhydrate als angegeben. Es entsteht eine Hypoglykämie.",
+          text: "Eine angekündigkte Mahlzeit wird überschätzt. Dadurch isst der:die Patient:in weniger Kohlenhydrate als angegeben. Es entsteht eine Hypoglykämie.",
           patient: {
             IIReq: 0.7687743244645887,
             inputList: ["meal", "iir", "ibolus"],
@@ -887,7 +887,7 @@ export default {
       },
       currentSzenario: {
         name: "Kein Szenario",
-        text: "Diese Funktion unterstützt kein Szenario, damit ebenfalls individuelle Werte über Patient*in, Mahlzeiten und AID-System und Insulin eingestellt werden können.",
+        text: "Diese Funktion unterstützt kein Szenario, damit ebenfalls individuelle Werte über Patient:in, Mahlzeiten und AID-System und Insulin eingestellt werden können.",
         patient: {
           IIReq: 0.7687743244645887,
           inputList: ["meal", "iir", "ibolus"],
