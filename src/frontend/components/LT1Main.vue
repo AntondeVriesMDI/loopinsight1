@@ -222,7 +222,7 @@ export default {
       </div>
     </nav>
     <div id="options-Holder" class="container-fill">
-      <ul class="nav nav-pills">
+      <ul class="nav nav-pills justify-content-md-center">
         <li
           class="nav-item p-3"
           :key="tab.title"
@@ -466,7 +466,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 #options-Holder {
   background: var(--blue-light-tr);
   padding-bottom: 1em;
-  height: 100%;
+  margin-bottom: 3em;
 }
 #options-Holder .inactive {
   color: var(--blue-dark);

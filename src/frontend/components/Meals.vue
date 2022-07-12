@@ -1,6 +1,6 @@
 <template>
   <div class="container-fill px-3">
-    <div class="row justify-content-md-start">
+    <div class="row justify-content-md-center">
       <Meal
         :key="meal"
         v-for="meal in meals"

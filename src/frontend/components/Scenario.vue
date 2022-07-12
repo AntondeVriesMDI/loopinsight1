@@ -1,6 +1,6 @@
 <template>
   <div class="container-fill px-3">
-    <div class="row justify-content-md-start">
+    <div class="row justify-content-md-center">
       <div class="col-2" id="scenario-drop">
         <select class="form-select" v-model="currentSzenario">
           <option
@@ -20,7 +20,7 @@
           Szenario laden
         </button>
       </div>
-      <div class="col" id="scenario-box">
+      <div class="col-5" id="scenario-box">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ this.currentSzenario.name }}</h5>

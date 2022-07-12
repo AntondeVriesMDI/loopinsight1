@@ -1,5 +1,5 @@
 <template>
-  <div class="card container">
+  <div class="card rounded-7 border container">
     <div class="card-body">
       <h5 class="card-title">Mahlzeit</h5>
       <div class="mb-3">
