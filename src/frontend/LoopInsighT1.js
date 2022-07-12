@@ -250,6 +250,10 @@ const store = createStore({
       state.targetValues.lower = payload.lower;
       //.log(state.targetValues.upper);
     },
+    addMeal: (state, payload) => {
+      state.meals.push(payload);
+      console.log(state.meals);
+    },
   },
 });
 

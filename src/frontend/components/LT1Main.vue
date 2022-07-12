@@ -54,7 +54,12 @@ export default {
       tspan: 8,
       isActive: false,
       activeTab: 0,
-      tabList: ["Szenarien", "Pa", "Tab3", "Tab4"],
+      tabList: [
+        "Szenarien",
+        "Mahlzeiten",
+        "Patient*innen",
+        "Insulin und AID-System",
+      ],
       events: {
         meals: this.meals,
       },
@@ -235,21 +240,16 @@ export default {
           ></a>
         </li>
       </ul>
-      <ul class="nav nav-pills col-sm-3 flex-column">
-        <li
-          class="nav-item p-3"
-          :value="szenario"
-          :key="szenario"
-          v-for="szenario in szenarios"
-        >
-          <a
-            class="nav-link nav-item active"
-            v-text="szenario.name"
-            href="#"
-          ></a>
-        </li>
-      </ul>
-      <Scenario @szenarioChanged="szenarioChanged" />
+
+      <div v-show="activeTab == 0">
+        <Scenario @szenarioChanged="szenarioChanged" />
+      </div>
+      <div v-show="activeTab == 1">
+        <Meals />
+      </div>
+      <div v-show="activeTab == 2"></div>
+
+      <div v-show="active == 3"></div>
     </div>
     <!--<Meals />-->
     <div id="container">
@@ -483,6 +483,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 #options-Holder {
   background: var(--blue-light-tr);
+  padding-bottom: 1em;
 }
 #options-Holder .inactive {
   color: var(--blue-dark);
