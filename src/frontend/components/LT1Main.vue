@@ -249,8 +249,9 @@ export default {
           ></a>
         </li>
       </ul>
-      <Scenario @szenarioChanged="szenarioChanged" />
+    <Scenario @szenarioChanged="szenarioChanged" />
     </div>
+ 
     <!--<Meals />-->
     <div id="container">
       <div id="controls">

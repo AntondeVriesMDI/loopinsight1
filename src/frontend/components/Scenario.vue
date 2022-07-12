@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="row" id="scenario-drop">
-      <div class="col-4">
+    <div class="row d-flex justify-content-center" id="scenario-drop">
+      <div class="col" align="left">
         <select class="form-select" v-model="currentSzenario">
           <option
             :value="szenario"
@@ -20,7 +20,7 @@
           Lade Szenario
         </button>
       </div>
-      <div class="col-8" id="scenarioBox">
+      <div class="col" id="scenarioBox">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ this.currentSzenario.name }}</h5>
@@ -1131,19 +1131,15 @@ export default {
   margin-top: 1%;
 }
 
-#scenario-drop {
+.col-4 {
   position: left;
-  width: 100%;
-  padding-right: 1%;
-  margin-left: 1%;
-  margin-bottom: 1%;
 }
 
-#scenario-box {
-  height: 100%;
-  width: 100%;
-  margin-left: 1%;
-  padding-bottom: 1%;
-  padding-top: 1%;
+#scenario-drop {
+}
+
+#scenarioBox {
+margin-top: 1%;
+margin-bottom: 1%;
 }
 </style>
