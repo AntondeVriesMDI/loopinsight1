@@ -103,6 +103,7 @@ export default {
     },
     run() {
       this.runSimulation();
+      document.getElementById("results").scrollIntoView();
     },
     getController() {
       return controller;
@@ -222,7 +223,7 @@ export default {
       </div>
     </nav>
     <div id="options-Holder" class="container-fill">
-      <ul class="nav nav-pills justify-content-md-center">
+      <ul class="px-5 nav nav-pills justify-content-md-center">
         <li
           class="nav-item p-3"
           :key="tab.title"
