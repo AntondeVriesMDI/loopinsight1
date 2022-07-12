@@ -9,9 +9,6 @@ import { defaults } from "chart.js";
 import ControllerConfig from "./ControllerConfig.vue";
 import VirtualPatientConfig from "./VirtualPatientConfig.vue";
 import MealTable from "./MealTable.vue";
-import ChartGlucose from "./ChartGlucose.vue";
-import ChartInsulinCarbs from "./ChartInsulinCarbs.vue";
-import ChartControllerOutput from "./ChartControllerOutput.vue";
 import ChartAGP from "./ChartAGP.vue";
 import Event from "./Event.vue";
 import GlucoseChart from "./GlucoseChart.vue";
@@ -19,6 +16,7 @@ import { computed } from "vue";
 import GlucoseStats from "./GlucoseStats.vue";
 import Meals from "./Meals.vue";
 import Scenario from "./Scenario.vue";
+import InsulinStats from "./InsulinStats.vue";
 import "../assets/base.css";
 
 let controller = {};
@@ -30,39 +28,19 @@ export default {
 
   beforeMount() {
     // set default options for Chart
-    defaults.maintainAspectRatio = false;
-    defaults.responsive = true;
-    defaults.animation = false;
-    defaults.normalized = true;
-
-    defaults.elements.point.pointStyle = "line";
-    defaults.elements.point.radius = 0;
-
-    defaults.plugins.legend.labels.usePointStyle = true;
-
-    defaults.interaction.mode = "nearest";
-    defaults.interaction.axis = "xy";
-    defaults.interaction.intersect = false;
-
-    defaults.scale.title.display = true;
-    defaults.scale.title.text = this.$t("timeaxis");
-
-    defaults.parsing = false;
   },
 
   components: {
     ControllerConfig,
     VirtualPatientConfig,
     MealTable,
-    ChartGlucose,
-    ChartInsulinCarbs,
-    ChartControllerOutput,
     ChartAGP,
     Event,
     GlucoseChart,
     GlucoseStats,
     Meals,
     Scenario,
+    InsulinStats,
   },
 
   data() {
@@ -74,6 +52,9 @@ export default {
       myCharts: [],
       t0String: new Date(Date.now()).toISOString().substr(0, 11) + "06:00:00",
       tspan: 8,
+      isActive: false,
+      activeTab: 0,
+      tabList: ["Szenarien", "Pa", "Tab3", "Tab4"],
       events: {
         meals: this.meals,
       },
@@ -108,10 +89,15 @@ export default {
         this.tspan--;
       }
     },
+    selectTab(i) {
+      this.activeTab = i;
+      // loop over all the tabs
+      this.tabList.forEach((tab, index) => {
+        tab.isActive = index === i;
+      });
+    },
     run() {
-      this.resetCharts();
       this.runSimulation();
-      this.updateCharts();
     },
     getController() {
       return controller;
@@ -147,14 +133,6 @@ export default {
     eventsChanged(changedEvents) {
       this.$store.commit("setMeal", changedEvents);
       this.run();
-    },
-    resetCharts() {
-      // todo
-      for (const chart in this.$refs) {
-        try {
-          this.$refs[chart].reset();
-        } catch {}
-      }
     },
     propagateSimulationResults(simResults) {
       //console.log(simResults);
@@ -195,34 +173,37 @@ export default {
     <nav class="navbar navbar-expand-md flex">
       <div id="generaloptions" class="container-fluid parameterlist d-flex">
         <div class="d-flex flex-row align-items-center">
-          <form class="d-flex align-items-center pe-3">
+          <form class="d-flex align-items-center pe-5">
             <label class="text lead fs-6 px-2">{{ $t("t0") }}</label>
             <input
+              id="date-picker"
               class="form-control form-control-sm"
               v-model="t0String"
               type="datetime-local"
             />
           </form>
           <p class="text lead fs-6 m-auto">{{ $t("tspan") }}:</p>
-          <p class="text lead fs-5 m-auto px-2">
-            <b>{{ tspan }}</b>
+          <p class="text lead fs-5 m-auto px-3">
+            <b>{{ tspan }} h</b>
           </p>
-          <button
-            id="plus"
-            type="button"
-            class="btn btn-primary rounded-circle text-center"
-            @click="increment"
-          >
-            +
-          </button>
-          <button
-            id="plus"
-            type="button"
-            class="btn btn-primary rounded-circle text-center"
-            @click="decrement"
-          >
-            -
-          </button>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button
+              id="hour"
+              class="btn btn-primary me-md-1"
+              type="button"
+              @click="increment"
+            >
+              +
+            </button>
+            <button
+              id="hour"
+              class="btn btn-primary"
+              type="button"
+              @click="decrement"
+            >
+              -
+            </button>
+          </div>
         </div>
 
         <button
@@ -235,13 +216,46 @@ export default {
         </button>
       </div>
     </nav>
+    <div id="options-Holder" class="container-fill">
+      <ul class="nav nav-pills nav-fill pt-4">
+        <li
+          class="nav-item p-3"
+          :key="tab.title"
+          v-for="(tab, index) in tabList"
+          @click="selectTab(index)"
+        >
+          <a
+            class="nav-link"
+            v-text="tab"
+            :class="{
+              'nav-item active': index === activeTab,
+              'nav-item inactive': index !== activeTab,
+            }"
+            href="#"
+          ></a>
+        </li>
+      </ul>
+      <ul class="nav nav-pills col-sm-3 flex-column">
+        <li
+          class="nav-item p-3"
+          :value="szenario"
+          :key="szenario"
+          v-for="szenario in szenarios"
+        >
+          <a
+            class="nav-link nav-item active"
+            v-text="szenario.name"
+            href="#"
+          ></a>
+        </li>
+      </ul>
+    </div>
     <Scenario @szenarioChanged="szenarioChanged" />
-    <!-- 
-  <Meals />
-      -->
+    <!--<Meals />-->
     <div id="container">
       <div id="controls">
         <GlucoseStats ref="chartAGP" />
+        <!--<InsulinStats />-->
       </div>
       <div id="results">
         <GlucoseChart
@@ -251,82 +265,14 @@ export default {
         />
       </div>
     </div>
-
-    <div id="container">
-      <div class="box">
-        <h2>{{ $t("settings") }}</h2>
-        <Event title="M"> </Event>
-        <Event title="B"> </Event>
-        <Event title="A"> </Event>
-        <ControllerConfig
-          @controllerChanged="controllerChanged"
-          v-bind:patient="patientData"
-        >
-        </ControllerConfig>
-        <VirtualPatientConfig @patientChanged="patientChanged">
-        </VirtualPatientConfig>
-        <MealTable :t0="t0" @mealsChanged="mealsChanged"> </MealTable>
-        <div
-          id="generalcontrols"
-          class="box2 accordionbox"
-          v-bind:class="{ boxactive: boxactive }"
-        >
-          <h3 @click="[(boxactive = !boxactive)]">{{ $t("general") }}</h3>
-          <div id="generaloptions" class="parameterlist">
-            <ul>
-              <li class="item">
-                <label for="t0">
-                  <div class="item-description">{{ $t("t0") }}</div>
-                  <div>
-                    <input v-model="t0String" type="datetime-local" />
-                  </div>
-                  <div class="item-unit"></div>
-                </label>
-              </li>
-              <li class="item">
-                <label for="t0">
-                  <div class="item-description">{{ $t("tspan") }}</div>
-                  <div class="item-input">
-                    <input
-                      v-model.number="tspan"
-                      type="number"
-                      min="0"
-                      step="1"
-                    />
-                  </div>
-                  <div class="item-unit">h</div>
-                </label>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <input
-            type="button"
-            id="startbutton"
-            :value="$t('run')"
-            @click="run"
-            v-tooltip="{
-              global: true,
-              theme: {
-                placement: 'bottom',
-                width: 'fit-content',
-                padding: '2rem',
-              },
-            }"
-          />
-        </div>
-      </div>
-      <div class="box">
-        <h2>{{ $t("results") }}</h2>
-
-        <ChartGlucose ref="chartGlucose" />
-        <ChartInsulinCarbs
-          ref="chartInsulinCarbs"
-          @selectLog="controllerDataHover"
-        />
-        <ChartControllerOutput ref="chartControllerOutput" />
-      </div>
+    <div v-show="false">
+      <ControllerConfig
+        @controllerChanged="controllerChanged"
+        v-bind:patient="patientData"
+      >
+      </ControllerConfig>
+      <VirtualPatientConfig @patientChanged="patientChanged">
+      </VirtualPatientConfig>
     </div>
   </div>
 </template>
@@ -498,15 +444,25 @@ select {
   margin-top: 1rem;
 }
 
-/* button "run simulation" 
+/* button "run simulation"
 input#startbutton {
 	float: right;
-	margin: 1rem; 
-	padding: 0.5rem; 
-	font-size: 1rem; 
+	margin: 1rem;
+	padding: 0.5rem;
+	font-size: 1rem;
 	padding: 0.5em;
 }*/
 
+#date-picker {
+  color: white;
+  border-color: var(--blue-light);
+  background-color: var(--blue-light);
+}
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 1;
+  filter: invert(1);
+}
 .navbar {
   background: var(--blue-light);
   border-top: 2px solid var(--blue-dark);
@@ -519,10 +475,23 @@ input#startbutton {
 .text {
   color: white;
 }
-#plus {
+#hour {
   background-color: var(--orange-light);
+  border-radius: 30%;
   border: 0;
   margin: auto;
+}
+#options-Holder {
+  background: var(--blue-light-tr);
+}
+#options-Holder .inactive {
+  color: var(--blue-dark);
+  border: 2px solid var(--blue-light);
+  background: white;
+}
+#options-Holder a {
+  background: var(--blue-dark);
+  border: 2px solid var(--blue-dark);
 }
 /* tooltip popups */
 .v-popper__inner {
