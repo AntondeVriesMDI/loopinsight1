@@ -388,6 +388,7 @@ export default {
 <style scoped>
 .graphContainer {
   padding: 5px;
+  user-select: none;
 }
 .graphHeader {
   display: inline;

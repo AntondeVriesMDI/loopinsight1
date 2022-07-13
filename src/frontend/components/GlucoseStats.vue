@@ -241,6 +241,7 @@ export default {
 <style>
 .statsContainer {
   padding: 5px;
+  user-select: none;
 }
 .rect {
   fill: blue;

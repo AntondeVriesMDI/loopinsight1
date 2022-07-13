@@ -22,7 +22,12 @@
             <h5 class="card-title">{{ this.currentSzenario.name }}</h5>
             <div class="card-text">
               <p>{{ this.currentSzenario.text }}</p>
-              <h6 v-if="this.currentSzenario.name != 'Kein Szenario'">
+              <h6
+                v-if="
+                  this.currentSzenario.name != 'Kein Szenario' &&
+                  this.currentSzenario.name != 'Alkohol'
+                "
+              >
                 Relevante Parameter:
               </h6>
               <div
@@ -228,7 +233,7 @@ export default {
         },
         Überzuckerung: {
           name: "Hyperglykämie",
-          text: "Durch eine angekündigkte Mahlzeit wird eine Überzuckerung ausgelöst, die durch das AID-System bewältigt werden kann.",
+          text: "Durch eine angekündigte Mahlzeit wird eine Überzuckerung ausgelöst, die durch das AID-System bewältigt werden kann.",
           parameter: [
             {
               type: "Number",
@@ -414,7 +419,7 @@ export default {
         },
         Unterzuckerung: {
           name: "Hypoglykämie",
-          text: "Eine angekündigkte Mahlzeit wird nicht eingenommen. Dadurch ensteht einer Hypoglykämie. Diese kann nicht durch das AID-System bewältigt werden.",
+          text: "Eine angekündigte Mahlzeit wird nicht eingenommen. Dadurch entsteht einer Hypoglykämie. Diese kann nicht durch das AID-System bewältigt werden.",
           parameter: [
             {
               type: "Number",
@@ -600,7 +605,7 @@ export default {
         },
         Unterschätzung: {
           name: "Unterschätzung",
-          text: "Eine angekündigkte Mahlzeit wird unterschätzt. Dadurch isst der:die Patient:in mehr Kohlenhydrate als angegeben. Es entsteht eine Hyperglykämie.",
+          text: "Eine angekündigte Mahlzeit wird unterschätzt. Dadurch isst der:die Patient:in mehr Kohlenhydrate als angegeben. Es entsteht eine Hyperglykämie.",
           parameter: [
             {
               type: "Number",
@@ -786,7 +791,7 @@ export default {
         },
         Überschätzung: {
           name: "Überschätzung",
-          text: "Eine angekündigkte Mahlzeit wird überschätzt. Dadurch isst der:die Patient:in weniger Kohlenhydrate als angegeben. Es entsteht eine Hypoglykämie.",
+          text: "Eine angekündigte Mahlzeit wird überschätzt. Dadurch isst der:die Patient:in weniger Kohlenhydrate als angegeben. Es entsteht eine Hypoglykämie.",
           parameter: [
             {
               type: "Number",
@@ -970,6 +975,173 @@ export default {
             },
           ],
         },
+        Alkohol: {
+          name: "Alkohol",
+          text: "Der Glukosewert im Blut kann durch Alkohol gesenkt werden, d.h. das Szenario einer Unterzuckerung Hypoglykämie kann eintreten. Dieses Feature wird nicht vom Simulator unterstützt.",
+          patient: {
+            IIReq: 0.7687743244645887,
+            inputList: ["meal", "iir", "ibolus"],
+            outputList: ["G"],
+            parameterList: [
+              "BW",
+              "Gpeq",
+              "VG",
+              "k1",
+              "k2",
+              "VI",
+              "m1",
+              "m2",
+              "m4",
+              "m5",
+              "m6",
+              "HEeq",
+              "kmax",
+              "kmin",
+              "kabs",
+              "kgri",
+              "f",
+              "kp1",
+              "kp2",
+              "kp3",
+              "kp4",
+              "ki",
+              "Fcns",
+              "Vm0",
+              "Vmx",
+              "Km0",
+              "p2u",
+              "ke1",
+              "ke2",
+              "ka1",
+              "ka2",
+              "kd",
+            ],
+            stateList: [
+              "Gp",
+              "Gt",
+              "Ip",
+              "Il",
+              "Qsto1",
+              "Qsto2",
+              "Qgut",
+              "XL",
+              "I_",
+              "X",
+              "Isc1",
+              "Isc2",
+            ],
+            signalList: [
+              "RaI",
+              "E",
+              "EGP",
+              "Uid",
+              "Uii",
+              "I",
+              "Qsto",
+              "Ra",
+              "S",
+              "HE",
+              "m3",
+            ],
+            defaultParameters: {
+              BW: 75,
+              Gpeq: 180,
+              VG: 1.88,
+              k1: 0.065,
+              k2: 0.079,
+              VI: 0.05,
+              m1: 0.19,
+              m2: 0.484,
+              m4: 0.194,
+              m5: 0.0304,
+              m6: 0.6471,
+              HEeq: 0.6,
+              kmax: 0.0558,
+              kmin: 0.008,
+              kabs: 0.057,
+              kgri: 0.0558,
+              f: 0.9,
+              kp1: 2.7,
+              kp2: 0.0021,
+              kp3: 0.009,
+              kp4: 0.0618,
+              ki: 0.0079,
+              Fcns: 1,
+              Vm0: 2.5,
+              Vmx: 0.047,
+              Km0: 225.59,
+              p2u: 0.0331,
+              ke1: 0.0005,
+              ke2: 339,
+              ka1: 0.0018,
+              ka2: 0.0182,
+              kd: 0.0164,
+            },
+            parameters: {
+              BW: 75,
+              Gpeq: 180,
+              VG: 1.88,
+              k1: 0.065,
+              k2: 0.079,
+              VI: 0.05,
+              m1: 0.19,
+              m2: 0.484,
+              m4: 0.194,
+              m5: 0.0304,
+              m6: 0.6471,
+              HEeq: 0.6,
+              kmax: 0.0558,
+              kmin: 0.008,
+              kabs: 0.057,
+              kgri: 0.0558,
+              f: 0.9,
+              kp1: 2.7,
+              kp2: 0.0021,
+              kp3: 0.009,
+              kp4: 0.0618,
+              ki: 0.0079,
+              Fcns: 1,
+              Vm0: 2.5,
+              Vmx: 0.047,
+              Km0: 225.59,
+              p2u: 0.0331,
+              ke1: 0.0005,
+              ke2: 339,
+              ka1: 0.0018,
+              ka2: 0.0182,
+              kd: 0.0164,
+            },
+            xeq: {
+              Gp: 180,
+              Gt: 136.18855213996963,
+              Ip: 2.1160867725422206,
+              Il: 2.156181048232494,
+              Qsto1: 0,
+              Qsto2: 0,
+              Qgut: 0,
+              XL: 42.32173545084441,
+              I_: 42.32173545084441,
+              X: 0,
+              Isc1: 56.320463330739095,
+              Isc2: 50.75030761670995,
+            },
+          },
+          meals: [
+            {
+              id: 0,
+              actual: {
+                start: "2022-07-10T06:00:00.000Z",
+                duration: 15,
+                carbs: 15,
+              },
+              announcement: {
+                start: "2022-07-10T06:00:00.000Z",
+                carbs: 30,
+                time: "2022-07-10T04:00:00.000Z",
+              },
+            },
+          ],
+        },
       },
       currentSzenario: {
         name: "Kein Szenario",
@@ -1143,9 +1315,11 @@ export default {
   emits: ["szenarioChanged"],
   methods: {
     szenarioSelected() {
-      this.currentSzenario.patient = this.getPatient();
-      this.$store.commit("setSzenario", this.currentSzenario);
-      this.$emit("szenarioChanged");
+      if (this.currentSzenario.name != "Alkohol") {
+        this.currentSzenario.patient = this.getPatient();
+        this.$store.commit("setSzenario", this.currentSzenario);
+        this.$emit("szenarioChanged");
+      }
       //this.run();
     },
     getPatient() {
