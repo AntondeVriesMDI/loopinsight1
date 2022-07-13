@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fill px-3">
+  <div id="text-font" class="container-fill px-3">
     <div class="row justify-content-md-center">
       <div class="col-2" id="scenario-drop">
         <select
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import "../assets/base.css";
 export default {
   props: {
     senText: String,
@@ -1376,10 +1377,19 @@ export default {
   margin-bottom: 1%;
   background-color: var(--blue-dark);
 }
-
 .form-select {
   width: 100%;
   padding-left: 1.5rem;
   margin-top: 1%;
+}
+.col-4 {
+  position: left;
+}
+#scenarioBox {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+#text-font {
+  font-family: ABeeZee, Candara, Helvetica, sans-serif;
 }
 </style>

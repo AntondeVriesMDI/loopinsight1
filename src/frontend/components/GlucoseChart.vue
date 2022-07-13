@@ -1,8 +1,8 @@
 <template>
   <div class="graphContainer">
     <div>
-      <h3 class="graphHeader">Glukose (mg/dl)</h3>
-      <h3 class="graphHeader rightHeader">Kohlenhydrate g</h3>
+      <text class="graphHeader">Glukose (mg/dl)</text>
+      <text class="graphHeader rightHeader">Kohlenhydrate g</text>
     </div>
     <svg id="svg" class="svg" width="100%" height="700" ref="glucoseSvg">
       <g :key="tick" v-for="tick in yTicks">

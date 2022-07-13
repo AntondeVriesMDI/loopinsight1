@@ -182,7 +182,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div id="text-font">
     <nav class="navbar navbar-expand-md flex">
       <div id="generaloptions" class="container-fluid parameterlist d-flex">
         <div class="d-flex flex-row align-items-center">
@@ -259,6 +259,7 @@ export default {
 
       <div v-show="active == 3"></div>
     </div>
+
     <!--<Meals />-->
     <div id="container">
       <div id="controls">
@@ -329,7 +330,7 @@ select {
   padding: 0.25rem;
   font-size: 0.8rem;
   box-sizing: border-box;
-  font-family: inherit;
+  font-family: ABeeZee, Candara, Helvetica, sans-serif;
 }
 
 /* outer boxes */
@@ -489,6 +490,10 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 .v-popper__inner {
   font-family: ABeeZee, Candara, Helvetica, sans-serif;
 }
+
+#text-font {
+  font-family: ABeeZee, Candara, Helvetica, sans-serif;
+}
 </style>
 
 }
@@ -514,4 +519,5 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 	"results":		"Ergebnisse",
 	"timeaxis":		"Zeit",
 }
+
 </i18n>
