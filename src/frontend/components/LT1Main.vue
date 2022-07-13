@@ -133,8 +133,8 @@ export default {
       this.meals = newMeals;
     },
     szenarioChanged() {
-      console.log("hier");
-      this.run();
+      this.resetCharts();
+      //this.run();
     },
     eventsChanged(changedEvents) {
       this.$store.commit("setMeal", changedEvents);
@@ -154,6 +154,13 @@ export default {
       for (const chart in this.$refs) {
         try {
           this.$refs[chart]._update();
+        } catch {}
+      }
+    },
+    resetCharts() {
+      for (const chart in this.$refs) {
+        try {
+          this.$refs[chart].reset();
         } catch {}
       }
     },

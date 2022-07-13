@@ -2,7 +2,11 @@
   <div class="container-fill px-3">
     <div class="row justify-content-md-center">
       <div class="col-2" id="scenario-drop">
-        <select class="form-select" v-model="currentSzenario">
+        <select
+          class="form-select"
+          v-model="currentSzenario"
+          @change="szenarioSelected"
+        >
           <option
             :value="szenario"
             :key="szenario"
@@ -11,14 +15,6 @@
             {{ szenario.name }}
           </option>
         </select>
-        <button
-          type="button"
-          class="btn btn-primary align-self-end"
-          id="loadbutton"
-          @click="loadSzenario"
-        >
-          Szenario laden
-        </button>
       </div>
       <div class="col-5" id="scenario-box">
         <div class="card">
@@ -216,7 +212,7 @@ export default {
           },
           meals: [
             {
-              id: 2,
+              id: 0,
               actual: {
                 start: "2022-07-10T06:00:00.000Z",
                 duration: 15,
@@ -399,7 +395,7 @@ export default {
           },
           meals: [
             {
-              id: 2,
+              id: 0,
               actual: {
                 start:
                   new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
@@ -585,7 +581,7 @@ export default {
           },
           meals: [
             {
-              id: 2,
+              id: 0,
               actual: {
                 start:
                   new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
@@ -771,7 +767,7 @@ export default {
           },
           meals: [
             {
-              id: 2,
+              id: 0,
               actual: {
                 start:
                   new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",
@@ -957,7 +953,7 @@ export default {
           },
           meals: [
             {
-              id: 2,
+              id: 0,
               actual: {
                 start:
                   new Date(Date.now()).toISOString().substr(0, 11) + "10:00:00",
@@ -1146,7 +1142,7 @@ export default {
   },
   emits: ["szenarioChanged"],
   methods: {
-    loadSzenario() {
+    szenarioSelected() {
       this.currentSzenario.patient = this.getPatient();
       this.$store.commit("setSzenario", this.currentSzenario);
       this.$emit("szenarioChanged");

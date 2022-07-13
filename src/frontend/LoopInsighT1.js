@@ -33,7 +33,7 @@ const store = createStore({
     return {
       meals: [
         {
-          id: 2,
+          id: 0,
           actual: {
             start:
               new Date(Date.now()).toISOString().substr(0, 11) + "08:00:00",

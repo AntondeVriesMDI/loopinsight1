@@ -40,7 +40,7 @@ export default {
     addMeal() {
       this.mealCount = this.$store.state.meals.length;
       this.$store.commit("addMeal", {
-        id: this.mealCount + 1,
+        id: this.mealCount,
         actual: {
           start: new Date(Date.now()).toISOString().substr(0, 11) + "10:00:00",
           duration: 15,
