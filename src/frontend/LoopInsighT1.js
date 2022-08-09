@@ -233,6 +233,14 @@ const store = createStore({
     };
   },
   mutations: {
+    setController: (state, payload) => {
+      state.ControllerOref0.profile.sens = payload.sens;
+      state.ControllerOref0.profile.dia = payload.dia;
+      state.ControllerOref0.profile.carb_ratio = payload.carb_ratio;
+      state.ControllerOref0.useBolus = payload.useBolus;
+      state.ControllerOref0.PreBolusTime = payload.PreBolusTime;
+      console.log("hier2");
+    },
     setMeal: (state, payload) => {
       state.meals = payload;
       //console.log(state.meals);

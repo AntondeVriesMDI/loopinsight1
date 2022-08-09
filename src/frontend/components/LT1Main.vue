@@ -18,6 +18,9 @@ import Meals from "./Meals.vue";
 import Scenario from "./Scenario.vue";
 import InsulinStats from "./InsulinStats.vue";
 import "../assets/base.css";
+import Oref0 from "../components/controllers/Oref0.vue";
+import ControllerOref0 from "../../core/controllers/Oref0.js";
+import UvaPadova from "../components/models/UvaPadova.vue";
 
 let controller = {};
 
@@ -41,6 +44,8 @@ export default {
     Meals,
     Scenario,
     InsulinStats,
+    Oref0,
+    UvaPadova,
   },
 
   data() {
@@ -83,6 +88,7 @@ export default {
         this.run();
       }
     );
+    this.getController();
   },
   methods: {
     increment() {
@@ -106,6 +112,13 @@ export default {
       document.getElementById("results").scrollIntoView();
     },
     getController() {
+      let controller = new ControllerOref0();
+      controller.setParameters(
+        JSON.parse(JSON.stringify(this.$store.state.ControllerOref0.profile)),
+        this.$store.state.ControllerOref0.useBolus,
+        this.$store.state.ControllerOref0.PreBolusTime,
+        this.$store.state.ControllerOref0.CarbFactor
+      );
       return controller;
     },
     getPatient() {
@@ -120,14 +133,10 @@ export default {
       const tmax = new Date(t0.valueOf() + this.tspan * 3600000);
       return { t0, tmax };
     },
-    controllerChanged(newController) {
-      if (typeof newController !== "undefined") {
-        controller = newController;
-      }
-    },
     patientChanged(newPatient) {
       this.patientObject = newPatient;
       this.$store.commit("setPatient", newPatient);
+      console.log("changedAPtient!");
     },
     mealsChanged(newMeals) {
       this.meals = newMeals;
@@ -255,9 +264,13 @@ export default {
       <div v-show="activeTab == 1">
         <Meals />
       </div>
-      <div v-show="activeTab == 2"></div>
+      <div v-show="activeTab == 2">
+        <UvaPadova @patientChanged="patientChanged" />
+      </div>
 
-      <div v-show="active == 3"></div>
+      <div v-show="activeTab == 3">
+        <Oref0 :patient="patientData" />
+      </div>
     </div>
 
     <!--<Meals />-->
@@ -273,15 +286,6 @@ export default {
           ref="chartG"
         />
       </div>
-    </div>
-    <div v-show="false">
-      <ControllerConfig
-        @controllerChanged="controllerChanged"
-        v-bind:patient="patientData"
-      >
-      </ControllerConfig>
-      <VirtualPatientConfig @patientChanged="patientChanged">
-      </VirtualPatientConfig>
     </div>
   </div>
 </template>

@@ -44,7 +44,13 @@ export default {
 
   methods: {
     valueChanged() {
-      this.$emit("controllerChanged", this.getController());
+      this.$store.commit("setController", {
+        sens: this.profile.sens,
+        dia: this.profile.dia,
+        carb_ratio: this.profile.carb_ratio,
+        useBolus: this.useBolus,
+        PreBolusTime: this.PreBolusTime,
+      });
     },
 
     getController() {
@@ -63,7 +69,107 @@ export default {
 </script>
 
 <template>
-  <div id="controlleroptions" class="parameterlist">
+  <div class="container-fill px-3">
+    <div class="row justify-content-md-center">
+      <div class="col-md-auto mx-2 card rounded-7 border container">
+        <div class="card-body">
+          <h5 class="card-title">Insulin</h5>
+          <div class="mb-3">
+            <form class="form-inline">
+              <div class="form-group mb-2">
+                <label for="ISF">
+                  Insulin sensitivitäts Faktor
+                  <small class="text-muted"> (mg/dl)/U </small>
+                </label>
+                <input
+                  type="number"
+                  min="20"
+                  step="5"
+                  id="ISF"
+                  class="form-control"
+                  v-model.number="profile.sens"
+                  @change="valueChanged"
+                />
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="DIA">
+                  Dauer der Insulin Aktivität
+                  <small class="text-muted"> h </small></label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="DIA"
+                  min="1"
+                  step="0.5"
+                  v-model.number="profile.dia"
+                  @change="valueChanged"
+                />
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="CR">
+                  Carb Ratio
+                  <small class="text-muted text-right"> g/U </small></label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="CR"
+                  min="1"
+                  step="0.5"
+                  v-model.number="profile.carb_ratio"
+                  @change="valueChanged"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-auto mx-2 card rounded-7 border container">
+        <div class="card-body">
+          <h5 class="card-title">AID-System</h5>
+          <form class="form-inline">
+            <div class="mb-3">
+              <div class="form-group mb-2">
+                <label for="act_carbs">
+                  Spritz-Ess-Abstand <small class="text-muted"> min </small>
+                </label>
+                <input
+                  id="act_carbs"
+                  class="form-control mb-1"
+                  type="number"
+                  min="0"
+                  step="5"
+                  v-model.number="PreBolusTime"
+                  @change="valueChanged"
+                />
+              </div>
+
+              <div class="form-group mb-2">
+                <div class="form-check form-switch">
+                  <label class="form-check-label" for="useBolus"
+                    >Bolus zur Mahlzeit</label
+                  >
+                  <input
+                    type="checkbox"
+                    id="useBolus"
+                    class="form-check-input mb-1"
+                    checked
+                    v-model="useBolus"
+                    @change="valueChanged"
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div id="controlleroptions" class="parameterlist">
     <ul>
       <li class="item">
         <label for="useBolus">
@@ -230,7 +336,7 @@ export default {
         </label>
       </li>
     </ul>
-  </div>
+  </div>-->
 </template>
 
 <style scoped>

@@ -4,84 +4,110 @@
    	Distributed under the MIT software license.
 	See https://lt1.org for further information.	*/
 
-import VirtualPatientUvaPadova from '../../../core/models/UvaPadova.js';
+import VirtualPatientUvaPadova from "../../../core/models/UvaPadova.js";
 
-import countDecimals from "../../../common/CountDecimals.js"
+import countDecimals from "../../../common/CountDecimals.js";
 
 export default {
-	emits: ["patientChanged"],
-	data() {
-		return {
-			id: "UvaPadova",
-			version: "1.0.0",
-			name: "",
-			hyperlink: "",
-			patient: new VirtualPatientUvaPadova(),
-		}
-	},
-	beforeMount() {
-		this.name = this.$t("name");
-	},
-	mounted() {
-		this.computeSteadyState();
-	},
-	methods: {
-		computeSteadyState() {
-			this.patient.computeSteadyState();
-			this.$emit("patientChanged", this.patient);
-		},
-		stepDistance(key) {
-			return Math.pow(10, countDecimals(this.patient.parameters[key]));
-		},
-		loaddefaultpatient() {
-			this.patient.setParameters(this.patient.defaults);
-		},
-		setParameters(parameters) {
-			this.patient.parameters = Object.assign(this.patient.parameters, 
-				JSON.parse(JSON.stringify(parameters)));
-		},
-	},
-}
+  emits: ["patientChanged"],
+  data() {
+    return {
+      id: "UvaPadova",
+      version: "1.0.0",
+      name: "",
+      hyperlink: "",
+      patient: new VirtualPatientUvaPadova(),
+    };
+  },
+  beforeMount() {
+    this.name = this.$t("name");
+  },
+  mounted() {
+    this.computeSteadyState();
+  },
+  methods: {
+    computeSteadyState() {
+      this.patient.computeSteadyState();
+      this.$emit("patientChanged", this.patient);
+    },
+    stepDistance(key) {
+      return Math.pow(10, countDecimals(this.patient.parameters[key]));
+    },
+    loaddefaultpatient() {
+      this.patient.setParameters(this.patient.defaults);
+    },
+    setParameters(parameters) {
+      this.patient.parameters = Object.assign(
+        this.patient.parameters,
+        JSON.parse(JSON.stringify(parameters))
+      );
+    },
+  },
+};
 </script>
 
-
 <template>
-	<div>
-	<p style="text-align:center;">
-		<input type="button" 
-			:value="$t('loaddefaultpatient')" 
-			@click="loaddefaultpatient">
-	</p>
-	<div id="patientoptions" class="parameterlist">
-		<ul>
-			<li v-for="(id) in patient.parameterList" class="item" :key="id">
-				<label :for="'param'+id" >
-					<div class="item-description"
-						v-tooltip="{content: $t('parameters.'+id)}">
-						<span v-html="$t('parameters.'+id,'html')"></span>
-					</div>
-					<div class="item-input">
-						<input v-model.number=patient.parameters[id] 
-							:id="'param'+id"
-							type="number" :min=0
-							@change="computeSteadyState()"
-							:step="stepDistance(id)">
-					</div>
-					<div class="item-unit">{{$t('parameters.'+id,'units')}}</div>
-				</label>
-			</li>	
-		</ul>
-	</div>
-	</div>
-</template>
+  <div>
+    <div class="container-fill px-3">
+      <div class="row justify-content-md-center">
+        <div class="col-md-auto mx-2 card rounded-7 border container">
+          <div class="card-body">
+            <h5 class="card-title">Patient*in</h5>
 
+            <div class="mb-3">
+              <form class="form-inline">
+                <div class="row">
+                  <div
+                    v-for="id in patient.parameterList"
+                    :key="id"
+                    class="col-md-2 mb-2"
+                  >
+                    <label
+                      :for="'param' + id"
+                      v-tooltip="{ content: $t('parameters.' + id) }"
+                    >
+                      {{ id }}
+                      <small class="text-muted">
+                        {{ $t("parameters." + id, "units") }}
+                      </small>
+                    </label>
+                    <input
+                      v-model.number="patient.parameters[id]"
+                      class="form-control"
+                      :id="'param' + id"
+                      type="number"
+                      :min="0"
+                      @change="computeSteadyState()"
+                      :step="stepDistance(id)"
+                    />
+                  </div>
+                  <div class="col row justify-content-end">
+                    <input
+                      type="button"
+                      id="reset"
+                      class="col-md-auto mb-2 btn btn-primary align-self-end"
+                      :value="$t('loaddefaultpatient')"
+                      @click="loaddefaultpatient"
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="css">
 #patientoptions label {
-	grid-template-columns: 100px 5.5rem auto !important;
+  grid-template-columns: 100px 5.5rem auto !important;
+}
+#reset {
+  background-color: var(--blue-dark);
 }
 </style>
-
 
 <i18n locale="units">
 {
