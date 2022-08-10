@@ -150,7 +150,7 @@
           ></Event>
         </g>
       </g>
-
+      <div id="overlay"></div>
       <text
         class="stakeholderText"
         text-anchor="start"
@@ -158,7 +158,7 @@
         dy=".25em"
         x="40"
       >
-        Patient*innen
+        Patient:innen
       </text>
       <text
         class="stakeholderText"
@@ -431,5 +431,16 @@ export default {
   stroke: #ffa1a1;
   stroke-width: 3;
   fill: none;
+}
+
+#overlay {
+    position: absolute;
+    width:100px;
+    height:100px;
+    background-color: gray;
+    top: 50px;
+    left: 50px;
+    padding: 10px;
+    opacity: .8;
 }
 </style>

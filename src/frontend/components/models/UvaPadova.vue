@@ -52,7 +52,7 @@ export default {
       <div class="row justify-content-md-center">
         <div class="col-md-auto mx-2 card rounded-7 border container">
           <div class="card-body">
-            <h5 class="card-title">Patient*in</h5>
+            <h5 class="card-title">Patient:in</h5>
 
             <div class="mb-3">
               <form class="form-inline">
