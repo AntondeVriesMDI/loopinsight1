@@ -1,27 +1,34 @@
 <template>
-<div type="text/x-template" id="modal-template">
+  <div type="text/x-template" id="modal-template">
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-header">
             <div name="header">
-              {{header}}
+              {{ header }}
             </div>
-          </div>  
+          </div>
 
           <div class="modal-body">
             <slot name="body">
-              {{body}}
+              {{ body }}
             </slot>
           </div>
 
           <div class="modal-footer">
             <slot name="footer">
-              <button v-if = "step == 2" class="modalbutton btn btn-primary" @click="$emit('close')">
+              <button
+                v-if="step == 2"
+                class="modalbutton btn btn-primary"
+                @click="$emit('close')"
+              >
                 Beenden
               </button>
-                <button v-else class="modalbutton btn btn-primary" @click="incrementStep">
+              <button
+                v-else
+                class="modalbutton btn btn-primary"
+                @click="incrementStep"
+              >
                 Weiter
               </button>
             </slot>
@@ -29,28 +36,33 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-    data () {
-        return {
-            header: "Erklärung des Menüs",
-            body: "In diesem Menü können Sie die verschiedenen Szenarien auswählen und durch andere Optionen, wie z.B. Patient:in entsprechende Parameter ändern, um diese auf Ihre:n Patient:in anzupassen.",
-            step: 1,
-        }
+  data() {
+    return {
+      header: "Erklärung des Menüs",
+      body: "In diesem Menü können Sie die verschiedenen Szenarien auswählen und durch andere Optionen, wie z.B. Patient:in entsprechende Parameter ändern, um diese auf Ihre:n Patient:in anzupassen.",
+      step: 1,
+    };
+  },
+  methods: {
+    incrementStep() {
+      this.step++;
+      if (this.step == 2) {
+        this.header = "Erklärung der Graphen";
+        this.body =
+          "In diesem Abschnitt werden die zuvor eingestellten Parameter visualisiert. Darüber hinaus haben Sie die Möglichkeit, die Icons per Drag und Drop mit dem Mauszeiger zu verschieben und so die Mahlzeiten und den  Bolus dynamisch anzupassen.";
+      }
+      this.$emit("step", this.step);
     },
-    methods: {
-        incrementStep() {
-            this.step++;
-            if(this.step == 2) {
-                this.header = "Erklärung der Graphen"
-                this.body = "In diesem Abschnitt werden die zuvor eingestellten Parameter visualisiert. Darüber hinaus haben Sie die Möglichkeit, die Icons per Drag und Drop mit dem Mauszeiger zu verschieben und so die Mahlzeiten und den  Bolus dynamisch anzupassen."
-            }
-        }
-    }
-}
+  },
+  mounted() {
+    this.$emit("step", this.step);
+  },
+};
 </script>
 
 <style scoped>
@@ -71,7 +83,10 @@ export default {
 }
 
 .modal-container {
-  width: 25%;
+  width: 20%;
+  position: relative;
+  top: -15%;
+  left: 39%;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: var(--blue-dark);
@@ -104,7 +119,8 @@ export default {
  * these styles.
  */
 
-.modal-enter-from, .modal-leave-to {
+.modal-enter-from,
+.modal-leave-to {
   opacity: 0;
 }
 
@@ -117,10 +133,9 @@ export default {
 .modalbutton {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  background: #57BCFF;
+  background: #57bcff;
   font-family: ABeeZee, Candara, Helvetica, sans-serif;
   color: white;
   outline: 0;
 }
-
 </style>
