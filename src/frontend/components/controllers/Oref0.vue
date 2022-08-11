@@ -77,7 +77,7 @@ export default {
           <div class="mb-3">
             <form class="form-inline">
               <div class="form-group mb-2">
-                <label for="ISF">
+                <label v-tooltip="$t('tooltips.ISF')" for="ISF">
                   Insulin sensitivitäts Faktor
                   <small class="text-muted"> (mg/dl)/U </small>
                 </label>
@@ -93,7 +93,7 @@ export default {
               </div>
 
               <div class="form-group mb-2">
-                <label for="DIA">
+                <label v-tooltip="$t('tooltips.DIA')" for="DIA">
                   Dauer der Insulin Aktivität
                   <small class="text-muted"> h </small></label
                 >
@@ -109,7 +109,7 @@ export default {
               </div>
 
               <div class="form-group mb-2">
-                <label for="CR">
+                <label v-tooltip="$t('tooltips.CR')" for="CR">
                   Carb Ratio
                   <small class="text-muted text-right"> g/U </small></label
                 >
@@ -134,7 +134,7 @@ export default {
           <form class="form-inline">
             <div class="mb-3">
               <div class="form-group mb-2">
-                <label for="act_carbs">
+                <label v-tooltip="$t('tooltips.PreBolusTime')" for="act_carbs">
                   Spritz-Ess-Abstand <small class="text-muted"> min </small>
                 </label>
                 <input
