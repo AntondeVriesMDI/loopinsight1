@@ -130,6 +130,8 @@
             :y="scaleFood(meal.announcement.carbs)"
             :id="meal.id"
             @eventChanged="eventChanged"
+            :time="new Date(meal.announcement.start)"
+            :value="meal.announcement.carbs"
           ></Event>
           <Event
             title="M"
@@ -137,6 +139,8 @@
             :y="scaleFood(meal.actual.carbs)"
             :id="meal.id"
             @eventChanged="eventChanged"
+            :time="new Date(meal.actual.start)"
+            :value="meal.actual.carbs"
           ></Event>
           >
         </g>
@@ -147,6 +151,20 @@
             :y="scaleAIDy(bolus.y)"
             :id="bolus.id"
             @eventChanged="eventChanged"
+            :time="bolus.t"
+            :value="bolus.y"
+          ></Event>
+        </g>
+
+        <g :key="action" v-for="action in actions">
+          <Event
+            title="H"
+            :x="scaleX(action.t)"
+            :y="scaleY(action.y)"
+            :id="action.id"
+            @eventChanged="eventChanged"
+            :time="action.t"
+            :value="action.y"
           ></Event>
         </g>
       </g>
@@ -223,6 +241,7 @@ export default {
       offsets: [0, 0, 0, 0],
       myEvents: [],
       datahere: false,
+      actions: [],
     };
   },
   components: {
@@ -255,6 +274,8 @@ export default {
       this.basalLine = [];
       this.boluses = [];
       this.datahere = false;
+      this.actions = [];
+      this.firsttouch = true;
     },
     eventChanged(changedEvent) {
       let payload = this.meals;
@@ -296,6 +317,19 @@ export default {
         if (simResults[i].u.ibolus > 0) {
           //console.log(simResults[i]);
           this.boluses.push({ t: simResults[i].t, y: simResults[i].u.ibolus });
+        }
+
+        if (
+          simResults[i].y.Gp < this.$store.state.targetValues.lower &&
+          this.firsttouch
+        ) {
+          this.actions.push({ t: simResults[i].t, y: simResults[i].y.Gp });
+          this.firsttouch = false;
+        } else if (
+          simResults[i].y.Gp > this.$store.state.targetValues.lower &&
+          !this.firsttouch
+        ) {
+          this.firsttouch = true;
         }
         this.basalData.push({
           t: simResults[i].t,

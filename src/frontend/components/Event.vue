@@ -123,6 +123,35 @@
         </g>
       </svg>
     </g>
+    <g v-else-if="title == 'H'">
+      <svg
+        :x="this.initcoords.x - 20"
+        :y="this.lineEnd - 20"
+        v-tooltip="this.name"
+        width="40"
+        height="40"
+        viewBox="0 0 92 92"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xml:space="preserve"
+        xmlns:serif="http://www.serif.com/"
+        style="
+          fill-rule: evenodd;
+          clip-rule: evenodd;
+          stroke-linejoin: round;
+          stroke-miterlimit: 2;
+        "
+      >
+        <g>
+          <circle cx="46" cy="46" r="40" style="fill: rgb(229, 90, 86)" />
+          <path
+            d="M46,65.167c0.894,-0 1.645,-0.304 2.252,-0.911c0.607,-0.607 0.91,-1.357 0.91,-2.252c0.001,-0.894 -0.303,-1.645 -0.91,-2.252c-0.607,-0.607 -1.358,-0.91 -2.252,-0.91c-0.894,-0 -1.645,0.303 -2.252,0.91c-0.607,0.607 -0.911,1.358 -0.911,2.252c0,0.895 0.304,1.645 0.911,2.252c0.607,0.607 1.358,0.911 2.252,0.911Zm-2.588,-14.663l5.75,0l0,-24.246l-5.75,0l0,24.246Z"
+            style="fill: white; fill-rule: nonzero"
+          />
+        </g>
+      </svg>
+    </g>
   </g>
 </template>
 
@@ -137,6 +166,8 @@ export default {
     y: Number,
     time: Date,
     id: Number,
+    time: Date,
+    value: Number,
   },
 
   data() {
@@ -163,21 +194,26 @@ export default {
           this.object = "meal";
           this.lineEnd = 420;
           this.moovable = true;
-          this.name = "Mahlzeit";
+          this.name = "Mahlzeit: " + Math.floor(this.value) + "g";
           break;
 
         case "B":
           this.object = "bolus";
           this.lineEnd = 460;
-          this.name = "Bolus";
+          this.name = "Bolus:" + Math.floor(this.value) + "U";
           break;
 
         case "A":
           this.object = "action";
           this.lineEnd = 460;
-          this.name = "Ankündigung";
-
+          this.name = "Ankündigung: " + Math.floor(this.value) + "g";
           break;
+
+        case "H":
+          this.object = "user";
+          this.lineEnd = 420;
+          this.name =
+            "Handlung: Blutzuckerspiegel durch Patient:innen steigern!";
       }
     },
     drag(event) {
@@ -241,6 +277,10 @@ export default {
 
 .action {
   fill: #f5a83b;
+}
+
+.user {
+  fill: #e55a56;
 }
 
 cirlce {
