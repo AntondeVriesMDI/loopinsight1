@@ -153,12 +153,13 @@ export default {
       return scale(value);
     },
     setSimulationResults(simResults) {
+      console.log("hier");
       this.reset();
       for (const result of simResults) {
         const { t, x, u, y, logData } = result;
         this._pushRecord(t, x, u, y, logData);
       }
-      this._update;
+      this._update();
     },
     reset() {
       this.G = [];
