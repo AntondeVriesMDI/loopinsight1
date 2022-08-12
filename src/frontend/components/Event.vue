@@ -60,6 +60,8 @@
       <svg
         :x="this.initcoords.x - 20"
         :y="this.lineEnd - 20"
+        @mousedown="handleMouseDown"
+        @mouseup="handleMouseUp"
         width="40"
         height="40"
         viewBox="0 0 80 80"
@@ -200,13 +202,14 @@ export default {
         case "B":
           this.object = "bolus";
           this.lineEnd = 460;
-          this.name = "Bolus:" + Math.floor(this.value) + "U";
+          this.name = "Bolus:" + this.value + "U";
           break;
 
         case "A":
           this.object = "action";
           this.lineEnd = 460;
           this.name = "Ankündigung: " + Math.floor(this.value) + "g";
+          this.moovable = true;
           break;
 
         case "H":
@@ -258,7 +261,7 @@ export default {
   mounted() {
     //console.log(this.x);
     this.changeColour();
-    console.log(this.y);
+    //(this.y);
     this.initcoords.x = this.x;
     this.initcoords.y = this.y;
     //console.log(this.x);

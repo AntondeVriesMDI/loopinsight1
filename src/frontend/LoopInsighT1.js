@@ -239,7 +239,7 @@ const store = createStore({
       state.ControllerOref0.profile.carb_ratio = payload.carb_ratio;
       state.ControllerOref0.useBolus = payload.useBolus;
       state.ControllerOref0.PreBolusTime = payload.PreBolusTime;
-      console.log("hier2");
+      //console.log("hier2");
     },
     setMeal: (state, payload) => {
       state.meals = payload;
@@ -249,7 +249,7 @@ const store = createStore({
       state.patient = payload;
     },
     setSzenario: (state, payload) => {
-      console.log("hieeer");
+      //console.log("hieeer");
       state.meals = payload.meals;
       state.patient = payload.patient;
     },
@@ -260,7 +260,7 @@ const store = createStore({
     },
     addMeal: (state, payload) => {
       state.meals.push(payload);
-      console.log(state.meals);
+      //console.log(state.meals);
     },
   },
 });

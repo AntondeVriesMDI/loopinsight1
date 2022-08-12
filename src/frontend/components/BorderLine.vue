@@ -41,7 +41,7 @@ export default {
     className: String,
   },
   mounted() {
-    console.log(this.x);
+    //console.log(this.x);
     this.initcoords.y = this.y;
     this.initcoords.x = this.x;
 

@@ -35,19 +35,37 @@ export default {
   },
   methods: {
     mealsChanged(newMeals) {
-      //console.log(newMeals);
+      console.log(newMeals);
+      let payload = this.meals;
+
+      for (let i = 0; i < payload.length; i++) {
+        if (payload[i].id == newMeals.id) {
+          payload[i] = newMeals;
+        }
+
+        this.$store.commit("setMeal", payload);
+        console.log(this.meals);
+      }
     },
     addMeal() {
       this.mealCount = this.$store.state.meals.length;
       this.$store.commit("addMeal", {
         id: this.mealCount,
         actual: {
-          start: new Date(Date.now()).toISOString().substr(0, 11) + "10:00:00",
+          start:
+            new Date(Date.now()).toISOString().substr(0, 11) +
+            "1" +
+            this.mealCount +
+            ":00:00",
           duration: 15,
           carbs: 30,
         },
         announcement: {
-          start: new Date(Date.now()).toISOString().substr(0, 11) + "10:00:00",
+          start:
+            new Date(Date.now()).toISOString().substr(0, 11) +
+            "1" +
+            this.mealCount +
+            ":00:00",
           carbs: 30,
           time: new Date(Date.now()).toISOString().substr(0, 11) + "07:00:00",
         },

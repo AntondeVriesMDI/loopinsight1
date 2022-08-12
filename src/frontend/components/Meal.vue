@@ -57,7 +57,7 @@ import { dateToBrowserLocale } from "../../common/util.js";
 export default {
   data() {
     return {
-      tActualStartString: "",
+      tStartString: "",
       tAnnouncedStartString: "",
       tAnnouncementTimeString: "",
     };
@@ -91,9 +91,13 @@ export default {
   },
   methods: {
     changed() {
-      this.meal.actual.start = new Date(this.tActualStartString);
+      this.meal.actual.start = new Date(this.tStartString);
       this.meal.announcement.start = new Date(this.tAnnouncedStartString);
-      this.meal.announcement.time = new Date(this.tAnnouncementTimeString);
+      console.log("meal");
+      console.log(this.meal.announcement.start);
+      this.meal.announcement.time =
+        new Date(Date.now()).toISOString().substr(0, 11) + "05:00:00";
+      console.log(JSON.parse(JSON.stringify(this.meal)));
       this.$emit("mealChanged", JSON.parse(JSON.stringify(this.meal)));
     },
   },

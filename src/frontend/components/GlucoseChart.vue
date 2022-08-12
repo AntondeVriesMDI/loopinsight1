@@ -263,7 +263,7 @@ export default {
   },
   methods: {
     update() {
-      console.log("update");
+      //console.log("update");
     },
     reset() {
       this.data = [];
@@ -282,15 +282,22 @@ export default {
       if (changedEvent.type == "M") {
         for (let i = 0; i <= payload.length - 1; i++) {
           if (payload[i].id == changedEvent.id) {
-            payload[i].actual.carbs = this.scaleFinvert(changedEvent.y);
+            payload[i].actual.carbs = Math.floor(
+              this.scaleFinvert(changedEvent.y)
+            );
             payload[i].actual.start = this.scaleTinvert(changedEvent.x);
           }
         }
       } else if (changedEvent.type == "A") {
         for (let i = 0; i <= payload.length - 1; i++) {
           if (payload[i].id == changedEvent.id) {
-            payload[i].announcement.carbs = this.scaleFinvert(changedEvent.y);
+            payload[i].announcement.carbs = Math.floor(
+              this.scaleFinvert(changedEvent.y)
+            );
             payload[i].announcement.start = this.scaleTinvert(changedEvent.x);
+            payload[i].announcement.start.setSeconds(0, 0);
+            payload[i].announcement.time =
+              new Date(Date.now()).toISOString().substr(0, 11) + "05:00:00";
           }
         }
       }
@@ -307,7 +314,7 @@ export default {
       this.offsets[3] = (bottom / spam) * 100 - 100;
     },
     setSimulationResults(simResults) {
-      console.log(simResults);
+      //console.log(simResults);
       this.reset();
       this.maxY = simResults[0].y.G;
       this.minY = simResults[0].y.G;
@@ -336,6 +343,10 @@ export default {
           y: simResults[i].u.iir,
         });
       }
+      console.log("sim Results:");
+      console.log(simResults);
+      console.log("boluses:");
+      console.log(this.boluses);
       for (const dataPoint of this.data) {
         if (this.maxY < dataPoint.y.G) {
           this.maxY = dataPoint.y.G;

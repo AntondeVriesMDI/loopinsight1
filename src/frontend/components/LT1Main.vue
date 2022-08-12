@@ -98,7 +98,7 @@ export default {
   methods: {
     increment() {
       this.tspan++;
-      console.log(this.tspan);
+      //console.log(this.tspan);
     },
     decrement() {
       if (this.tspan > 0) {
@@ -108,9 +108,6 @@ export default {
     selectTab(i) {
       this.activeTab = i;
       // loop over all the tabs
-      this.tabList.forEach((tab, index) => {
-        tab.isActive = index === i;
-      });
     },
     closeTour() {
       this.showStartScreen = false;
@@ -137,7 +134,7 @@ export default {
         document.getElementById("results").style.border = "thick solid #F5A83B";
         document.getElementById("options-Holder").style.border = "none";
       }
-      console.log(step);
+      //>console.log(step);
     },
     noTour() {
       this.showStartScreen = false;
@@ -146,6 +143,7 @@ export default {
     run() {
       this.runSimulation();
       document.getElementById("results").scrollIntoView();
+      //console.log(this.$store.state.ControllerOref0.useBolus);
     },
     getController() {
       let controller = new ControllerOref0();
@@ -162,6 +160,9 @@ export default {
       return this.$store.state.patient;
     },
     getMeals() {
+      console.log("meals in");
+      console.log(this.$store.state.meals);
+      console.log(JSON.parse(JSON.stringify(this.$store.state.meals)));
       return JSON.parse(JSON.stringify(this.$store.state.meals));
     },
     getOptions() {
@@ -172,7 +173,7 @@ export default {
     patientChanged(newPatient) {
       this.patientObject = newPatient;
       this.$store.commit("setPatient", newPatient);
-      console.log("changedAPtient!");
+      //console.log("changedAPtient!");
     },
     mealsChanged(newMeals) {
       this.meals = newMeals;
@@ -182,7 +183,10 @@ export default {
       //this.run();
     },
     eventsChanged(changedEvents) {
+      //console.log(this.$store.state.meals);
+      console.log(changedEvents);
       this.$store.commit("setMeal", changedEvents);
+      //console.log(this.$store.state.meals);
       this.run();
     },
     propagateSimulationResults(simResults) {
