@@ -196,19 +196,19 @@ export default {
           this.object = "meal";
           this.lineEnd = 420;
           this.moovable = true;
-          this.name = "Mahlzeit: " + Math.floor(this.value) + "g";
+          this.name = "Mahlzeit: " + Math.round(this.value * 10) / 10 + " g";
           break;
 
         case "B":
           this.object = "bolus";
           this.lineEnd = 460;
-          this.name = "Bolus:" + this.value + "U";
+          this.name = "Bolus: " + Math.round(this.value * 10) / 10 + " U";
           break;
 
         case "A":
           this.object = "action";
           this.lineEnd = 460;
-          this.name = "Ankündigung: " + Math.floor(this.value) + "g";
+          this.name = "Ankündigung: " + Math.round(this.value * 10) / 10 + " g";
           this.moovable = true;
           break;
 

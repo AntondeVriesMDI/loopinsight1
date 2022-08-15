@@ -6,25 +6,17 @@
 
 import { defaults } from "chart.js";
 
-import ControllerConfig from "./ControllerConfig.vue";
-import VirtualPatientConfig from "./VirtualPatientConfig.vue";
-import MealTable from "./MealTable.vue";
-import ChartAGP from "./ChartAGP.vue";
 import Event from "./Event.vue";
 import GlucoseChart from "./GlucoseChart.vue";
-import { computed } from "vue";
 import GlucoseStats from "./GlucoseStats.vue";
 import Meals from "./Meals.vue";
 import Scenario from "./Scenario.vue";
-import InsulinStats from "./InsulinStats.vue";
+
 import "../assets/base.css";
 import Oref0 from "../components/controllers/Oref0.vue";
 import ControllerOref0 from "../../core/controllers/Oref0.js";
 import UvaPadova from "../components/models/UvaPadova.vue";
 import StartTour from "./StartTour.vue";
-
-let controller = {};
-
 export default {
   props: {
     runSimulation: Function,
@@ -35,16 +27,12 @@ export default {
   },
 
   components: {
-    ControllerConfig,
-    VirtualPatientConfig,
-    MealTable,
-    ChartAGP,
     Event,
     GlucoseChart,
     GlucoseStats,
     Meals,
     Scenario,
-    InsulinStats,
+
     Oref0,
     UvaPadova,
     StartTour,
@@ -161,14 +149,17 @@ export default {
       );
       return controller;
     },
+
     getPatient() {
-      //console.log(this.$store.state.patient);
       return this.$store.state.patient;
     },
+
+    patientChanged(newPatient) {
+      this.patientObject = newPatient;
+      this.$store.commit("setPatient", newPatient);
+    },
+
     getMeals() {
-      console.log("meals in");
-      console.log(this.$store.state.meals);
-      console.log(JSON.parse(JSON.stringify(this.$store.state.meals)));
       return JSON.parse(JSON.stringify(this.$store.state.meals));
     },
     getOptions() {
@@ -176,14 +167,7 @@ export default {
       const tmax = new Date(t0.valueOf() + this.tspan * 3600000);
       return { t0, tmax };
     },
-    patientChanged(newPatient) {
-      this.patientObject = newPatient;
-      this.$store.commit("setPatient", newPatient);
-      //console.log("changedAPtient!");
-    },
-    mealsChanged(newMeals) {
-      this.meals = newMeals;
-    },
+
     szenarioChanged() {
       this.resetCharts();
       //this.run();
